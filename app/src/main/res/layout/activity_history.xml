@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Controller.HistoryActivity">
+
+
+    <RelativeLayout
+        android:id="@+id/activity_history_7_jours_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/activity_history_7_jours_btn"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_margin="10dp"
+            android:background="@drawable/ic_comment_black_48px" />
+
+        <TextView
+            android:id="@+id/activity_history_text_jour_7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Il y a une semaine"
+            tools:text="@string/jour_7" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/activity_history_6_jours_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/activity_history_6_jours_btn"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_margin="10dp"
+            android:background="@drawable/ic_comment_black_48px" />
+
+        <TextView
+            android:id="@+id/activity_history_text_jour_6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Il y a 6 jours"
+            tools:text="@string/jour_6" />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/activity_history_5_jours_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/activity_history_5_jours_btn"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_margin="10dp"
+            android:background="@drawable/ic_comment_black_48px"  />
+
+        <TextView
+            android:id="@+id/activity_history_text_jour_5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Il y a 5 jours"
+            tools:text="@string/jour_5" />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/activity_history_4_jours_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/activity_history_4_jours_btn"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_margin="10dp"
+            android:background="@drawable/ic_comment_black_48px"  />
+
+        <TextView
+            android:id="@+id/activity_history_text_jour_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Il y a 4 jours"
+            tools:text="@string/jour_4" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/activity_history_3_jours_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/activity_history_3_jours_btn"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_margin="10dp"
+            android:background="@drawable/ic_comment_black_48px"  />
+
+        <TextView
+            android:id="@+id/activity_history_text_jour_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Il y a 3 jours"
+            tools:text="@string/jour_3" />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/activity_history_2_jours_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/activity_history_2_jours_btn"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_margin="10dp"
+            android:background="@drawable/ic_comment_black_48px"  />
+
+        <TextView
+            android:id="@+id/activity_history_text_jour_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Il y a 2 jours"
+            tools:text="@string/jour_2" />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/activity_history_1_jour_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/activity_history_1_jour_btn"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_margin="10dp"
+            android:background="@drawable/ic_comment_black_48px"  />
+
+        <TextView
+            android:id="@+id/activity_history_text_jour_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hier"
+            tools:text="@string/jour_1" />
+
+    </RelativeLayout>
+</LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
