@@ -52,6 +52,10 @@ public class MainActivity extends AppCompatActivity {
     private static final String PREF_BACKGROUND_COLOR = "PREF_BACKGROUND_COLOR";
     public static final String PREFERENCES_KEY_MOOD = "mood";
 
+
+    private static final String SAVED_SMILEY_STATE ="SAVED_SMILEY_STATE";//key used to read and save Smiley state
+    private static final String CURRENT_MOOD_COMMENT="CURRENT_MOOD_COMMENT";
+
     final Context context = this;
     public EditText edResult;
     private VerticalViewPager viewPager;
@@ -69,8 +73,12 @@ public class MainActivity extends AppCompatActivity {
     private String mComment;
 
 
+    private SimpleDateFormat sdf;
+    private DifferentMoods mood;
+
+
     private int mPosition;
-    private int mCurrentDay;
+    private int mCurrentDate;
     private int mDayChecker;
 
 
@@ -172,12 +180,17 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this,HistoryActivity.class);
                 startActivity(intent);
 
-                /*Intent historyActivity = new Intent(MainActivity.this, HistoryActivity.class);
-                startActivity(historyActivity);*/
+
 
             }
 
         });
+
+        sdf = new SimpleDateFormat("ddMMyyyy");
+        mCalendar = Calendar.getInstance();
+        mCalendar.setTime(new Date());
+        mCalendar.add(Calendar.DATE, 0);
+        //mCurrentDate = sdf.format(mCalendar.getTime());
 
         //Enregistrer un commentaire
         mSharedPref = getSharedPreferences("COMMENT" + dateToString(new Date()), MODE_PRIVATE);
@@ -203,42 +216,51 @@ public class MainActivity extends AppCompatActivity {
 
 
             @Override
-            public void onPageSelected(int i) {
+            public void onPageSelected(int position) {
 
-                mSharedPref = getSharedPreferences("SHARED_PREFS",Context.MODE_PRIVATE);
+
+                /*mSharedPref = getSharedPreferences("SHARED_PREFS",Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = mSharedPref.edit();
                 editor.putString("PREF_KEY_COMMENT",mComment);
                 editor.apply();
-                editor.commit();
+                editor.commit();*/
 
-                switch (i) {
+                switch (position) {
 
 
 
                     case 0:
+                        mSharedPref.edit().putString(PREFERENCES_KEY_MOOD,"SAD_STATE").apply();
+                        mSharedPref.edit().putInt(PREF_BACKGROUND_COLOR,R.color.sad_red).apply();
 
-
+                        mSharedPref.edit().putString(SAVED_SMILEY_STATE,"SAD_STATE").apply();
+                        mSharedPref.edit().putInt(CURRENT_MOOD_COMMENT,R.color.sad_red);
                         Toast.makeText(MainActivity.this, DifferentMoods.Sad.name(), Toast.LENGTH_SHORT).show();
                         break;
 
                     case 1:
+                        mSharedPref.edit().putString(PREFERENCES_KEY_MOOD,"DISAPPOINTED_STATE").apply();
+                        mSharedPref.edit().putInt(PREF_BACKGROUND_COLOR,R.color.disappointed_grey).apply();
 
                         Toast.makeText(MainActivity.this, DifferentMoods.Disappointed.name(), Toast.LENGTH_SHORT).show();
                         break;
 
                     case 2:
+                        mSharedPref.edit().putString(PREFERENCES_KEY_MOOD,"NORMAL_STATE").apply();
+                        mSharedPref.edit().putInt(PREF_BACKGROUND_COLOR,R.color.normal_blue).apply();
 
                         Toast.makeText(MainActivity.this, DifferentMoods.Normal.name(), Toast.LENGTH_SHORT).show();
                         break;
 
                     case 3:
-
-                        
+                        mSharedPref.edit().putString(PREFERENCES_KEY_MOOD,"HAPPY_STATE ").apply();
+                        mSharedPref.edit().putInt(PREF_BACKGROUND_COLOR,R.color.happy_green).apply();
                         Toast.makeText(MainActivity.this, DifferentMoods.Happy.name(), Toast.LENGTH_SHORT).show();
                         break;
 
                     case 4:
-
+                        mSharedPref.edit().putString(PREFERENCES_KEY_MOOD,"SUPER_STATE").apply();
+                        mSharedPref.edit().putInt(PREF_BACKGROUND_COLOR,R.color.super_happy_yellow).apply();
                         Toast.makeText(MainActivity.this, DifferentMoods.SuperHappy.name(), Toast.LENGTH_SHORT).show();
                         break;
 
