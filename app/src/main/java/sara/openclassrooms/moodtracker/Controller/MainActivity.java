@@ -16,9 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.ParseException;
@@ -33,7 +31,7 @@ import sara.openclassrooms.moodtracker.Fragment.MoodFragment2;
 import sara.openclassrooms.moodtracker.Fragment.MoodFragment3;
 import sara.openclassrooms.moodtracker.Fragment.MoodFragment4;
 import sara.openclassrooms.moodtracker.Fragment.MoodFragment5;
-import sara.openclassrooms.moodtracker.Model.DifferentMoods;
+import sara.openclassrooms.moodtracker.Model.Mood;
 import sara.openclassrooms.moodtracker.Model.VerticalPagerAdapter;
 import sara.openclassrooms.moodtracker.Model.VerticalViewPager;
 import sara.openclassrooms.moodtracker.R;
@@ -43,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     //ArrayList contains all the moods
-    private ArrayList<DifferentMoods> mDifferentMoodsArrayList;
+    private ArrayList<Mood> mDifferentMoodsArrayList;
 
     private static final String SHARED_PREFS = "SHARED_PREFS";
     public static final String CURRENT_DAY = "CURRENT_DAY";
@@ -74,11 +72,11 @@ public class MainActivity extends AppCompatActivity {
 
 
     private SimpleDateFormat sdf;
-    private DifferentMoods mood;
+    private Mood mood;
 
 
     private int mPosition;
-    private int mCurrentDate;
+    private String mCurrentDate;
     private int mDayChecker;
 
 
@@ -88,13 +86,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setContentView(R.layout.activity_main);
 
         //permet  d'enlever la top bar ou bar de navigation
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+/*        requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);*/
 
-        setContentView(R.layout.activity_main);
+
 
 
         List<Fragment> list = new ArrayList<>();
@@ -177,8 +176,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(MainActivity.this,HistoryActivity.class);
-                startActivity(intent);
+                Intent historyActivity = new Intent(MainActivity.this,HistoryActivity.class);
+
+
+                startActivity(historyActivity);
 
 
 
@@ -186,11 +187,19 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
+
+        //DATE
+
         sdf = new SimpleDateFormat("ddMMyyyy");
         mCalendar = Calendar.getInstance();
         mCalendar.setTime(new Date());
         mCalendar.add(Calendar.DATE, 0);
-        //mCurrentDate = sdf.format(mCalendar.getTime());
+        mCurrentDate = sdf.format(mCalendar.getTime());
+
+
+
+       mood = Storage.load(this,mCurrentDate);
+
 
         //Enregistrer un commentaire
         mSharedPref = getSharedPreferences("COMMENT" + dateToString(new Date()), MODE_PRIVATE);
@@ -205,7 +214,7 @@ public class MainActivity extends AppCompatActivity {
         pagerAdapter = new VerticalPagerAdapter(getSupportFragmentManager(), list);
         viewPager.setAdapter(pagerAdapter);
         //final Intent sendIntent = new Intent(Intent.ACTION_SEND);
-        viewPager.setCurrentItem(mSharedPref.getInt(PREFERENCES_KEY_MOOD, 0));
+//        viewPager.setCurrentItem(mSharedPref.getInt(PREFERENCES_KEY_MOOD, 0)); retirer le 26 juin
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
 
@@ -217,8 +226,11 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
+                //mood.setPosition(position);
+                //System.out.println(mood.getPosition());
 
 
+               //Storage.(getApplicationContext(),mood,mCurrentDate);
                 /*mSharedPref = getSharedPreferences("SHARED_PREFS",Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = mSharedPref.edit();
                 editor.putString("PREF_KEY_COMMENT",mComment);
@@ -235,33 +247,35 @@ public class MainActivity extends AppCompatActivity {
 
                         mSharedPref.edit().putString(SAVED_SMILEY_STATE,"SAD_STATE").apply();
                         mSharedPref.edit().putInt(CURRENT_MOOD_COMMENT,R.color.sad_red);
-                        Toast.makeText(MainActivity.this, DifferentMoods.Sad.name(), Toast.LENGTH_SHORT).show();
+
+
+                        //Toast.makeText(MainActivity.this,MoodFragment1.class Toast.LENGTH_SHORT).show();
                         break;
 
                     case 1:
                         mSharedPref.edit().putString(PREFERENCES_KEY_MOOD,"DISAPPOINTED_STATE").apply();
                         mSharedPref.edit().putInt(PREF_BACKGROUND_COLOR,R.color.disappointed_grey).apply();
 
-                        Toast.makeText(MainActivity.this, DifferentMoods.Disappointed.name(), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MainActivity.this, Mood.Disappointed.name(), Toast.LENGTH_SHORT).show();
                         break;
 
                     case 2:
                         mSharedPref.edit().putString(PREFERENCES_KEY_MOOD,"NORMAL_STATE").apply();
                         mSharedPref.edit().putInt(PREF_BACKGROUND_COLOR,R.color.normal_blue).apply();
 
-                        Toast.makeText(MainActivity.this, DifferentMoods.Normal.name(), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MainActivity.this, Mood.Normal.name(), Toast.LENGTH_SHORT).show();
                         break;
 
                     case 3:
                         mSharedPref.edit().putString(PREFERENCES_KEY_MOOD,"HAPPY_STATE ").apply();
                         mSharedPref.edit().putInt(PREF_BACKGROUND_COLOR,R.color.happy_green).apply();
-                        Toast.makeText(MainActivity.this, DifferentMoods.Happy.name(), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MainActivity.this, Mood.Happy.name(), Toast.LENGTH_SHORT).show();
                         break;
 
                     case 4:
                         mSharedPref.edit().putString(PREFERENCES_KEY_MOOD,"SUPER_STATE").apply();
                         mSharedPref.edit().putInt(PREF_BACKGROUND_COLOR,R.color.super_happy_yellow).apply();
-                        Toast.makeText(MainActivity.this, DifferentMoods.SuperHappy.name(), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MainActivity.this, Mood.SuperHappy.name(), Toast.LENGTH_SHORT).show();
                         break;
 
                     default:
@@ -337,20 +351,4 @@ public class MainActivity extends AppCompatActivity {
         return dateStart.getTime();
     }
 
-    //public int getMoodIcon() {
-       // return moodIcon;
-    //}
-
-    public int getMoodBackgroundColor() {
-        return moodBackgroundColor;
-    }
-
-
-    public int getPosition() {
-        return mPosition;
-    }
-
-    public String getComment() {
-        return mComment;
-    }
 }
