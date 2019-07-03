@@ -16,14 +16,6 @@ import sara.openclassrooms.moodtracker.Model.Mood;
 import static android.content.Context.MODE_PRIVATE;
 
 public class Storage {
-    /*public static Mood load;
-    private SharedPreferences mSharedPref;
-        private Context context;*/
-
-
-        //constructor
-
-
 
 
 
@@ -47,6 +39,7 @@ public class Storage {
 
 
 
+
     //get the key date for the comments
     private String getCommentKey (Date date){
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE);
@@ -59,25 +52,7 @@ public class Storage {
             return "Mood_"+ simpleDateFormat.format(date);
     }
 
-    /*save the mood with date and key
-    public void saveMood (Date date, Mood moods){
-            mSharedPref.edit().putString(getCommentKey(date),moods.getComment()).apply();
 
-    }
-
-    //Get the moods on a date
-    public void getMood (Date date){
-            String moodsValue = mSharedPref.getString(getMoodKey(date),null);
-            if (moodsValue != null){
-            }
-
-    }
-    public void saveComment (Date date,String comment){
-            mSharedPref.edit().putString(getCommentKey(date),comment).apply();
-    }
-    public String getComment(Date date){
-            return mSharedPref.getString(getCommentKey(date),null);
-    }*/
 }
 
 

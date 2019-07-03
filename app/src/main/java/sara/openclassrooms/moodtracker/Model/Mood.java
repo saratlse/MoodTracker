@@ -6,6 +6,10 @@ public class Mood {
     private int position;
     private int moodBackgroundColor;
 
+    private String mood;
+    private DifferentsMoods differentsMoods;
+
+
 
 
 
@@ -15,6 +19,7 @@ public class Mood {
         this.comment = comment;
         this.position = position;
         this.moodBackgroundColor = moodBackgroundColor;
+
     }
 
     //constructor
@@ -28,6 +33,7 @@ public class Mood {
     public String getComment() {
         return comment;
     }
+
     public void setComment(String comment){
         this.comment = comment;
     }
@@ -36,8 +42,19 @@ public class Mood {
     public int getPosition() {
         return position;
     }
+
     public void setPosition(int position) {
         this.position = position;
+    }
+
+
+
+    public String getMood(){
+        return mood;
+    }
+
+    public void setMood(String mood){
+        this.mood = mood;
     }
 
 
@@ -45,11 +62,19 @@ public class Mood {
     public int getMoodBackgroundColor() {
         return moodBackgroundColor;
     }
-    public int setMoodBackgroundColor(){
-        return moodBackgroundColor;
+
+    public void setMoodBackgroundColor(int moodBackgroundColor){
+        this.moodBackgroundColor= moodBackgroundColor;
     }
 
 
+    public DifferentsMoods getDifferentsMoods(){
+        return differentsMoods;
+    }
+
+    public void setDifferentsMoods(DifferentsMoods differentsMoods){
+       this.differentsMoods = differentsMoods;
+    }
 
 
 

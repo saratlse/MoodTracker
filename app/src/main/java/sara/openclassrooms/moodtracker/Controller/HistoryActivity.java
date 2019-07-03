@@ -1,26 +1,47 @@
 package sara.openclassrooms.moodtracker.Controller;
 
+import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Display;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Map;
 
+import sara.openclassrooms.moodtracker.Fragment.MoodFragment1;
+import sara.openclassrooms.moodtracker.Model.DifferentsMoods;
 import sara.openclassrooms.moodtracker.Model.Mood;
 import sara.openclassrooms.moodtracker.R;
 
+import static sara.openclassrooms.moodtracker.Model.DifferentsMoods.DISAPPOINTED;
+import static sara.openclassrooms.moodtracker.Model.DifferentsMoods.HAPPY;
+import static sara.openclassrooms.moodtracker.Model.DifferentsMoods.NORMAL;
+import static sara.openclassrooms.moodtracker.Model.DifferentsMoods.SAD;
+import static sara.openclassrooms.moodtracker.Model.DifferentsMoods.SUPER_HAPPY;
+
 public class HistoryActivity extends AppCompatActivity {
+
+
+
+
+    private int width;
+    private int height;
 
 
     private SharedPreferences mSharedPref;
@@ -31,37 +52,42 @@ public class HistoryActivity extends AppCompatActivity {
     private SimpleDateFormat sdf;
 
 
-    private String mYesterday, mTwoDaysAgo, mThreeDaysAgo, mFourDaysAgo, mFiveDaysAgo, mSixDaysAgo, mSevenDaysAgo;
+    private Mood mYesterday;
+    private Mood mTwoDaysAgo;
+    private Mood mThreeDaysAgo;
+    private Mood mFourDaysAgo;
+    private Mood mFiveDaysAgo;
+    private Mood mSixDaysAgo;
+    private Mood mSevenDaysAgo;
     private int mActivityYesterdayColor, mActivity2DaysAgoColor, mActivity3DaysAgoColor, mActivity4DaysAgoColor, mActivity5DaysAgoColor, mActivity6DaysAgoColor, mActivity7DaysAgoColor;
     private String mActivityYesterdayComment, mActivity2DaysAgoComment, mActivity3DaysAgoComment, mActivity4DaysAgoComment, mActivity5DaysAgoComment, mActivity6DaysAgoComment, mActivity7DaysAgoComment;
     ListView mHistoryListView;
     TextView mHistoryTextView;
+    private Object DifferentsMoods;
 
-    ArrayList<RelativeLayout>listLayout = new ArrayList<>();
-    ArrayList<Button>listButton = new ArrayList<>();
-    ArrayList<TextView>listTextView = new ArrayList<>();
-
-
-
-
-
+    ArrayList<RelativeLayout> listLayout = new ArrayList<>();
+    ArrayList<Button> listButton = new ArrayList<>();
+    ArrayList<TextView> listTextView = new ArrayList<>();
+    ArrayList<Mood> historyList = new ArrayList<>();
+    ArrayList<ImageView> imageList = new ArrayList<>();
 
 
+    @TargetApi(Build.VERSION_CODES.M)
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
 
-        mSharedPref = getSharedPreferences("PREF_KEY_COMMENT",MODE_PRIVATE);
-        mComment= mSharedPref.getString("REF_KEY_COMMENT","");
+        mSharedPref = getSharedPreferences("PREF_KEY_COMMENT", MODE_PRIVATE);
+        mComment = mSharedPref.getString("REF_KEY_COMMENT", "");
 
 
-
-        ArrayList<RelativeLayout>listLayout = new ArrayList<>();
-        ArrayList<Button>listButton = new ArrayList<>();
-        ArrayList<TextView>listTextView = new ArrayList<>();
-
-
+        ArrayList<RelativeLayout> listLayout = new ArrayList<>();
+        ArrayList<Button> listButton = new ArrayList<>();
+        ArrayList<TextView> listTextView = new ArrayList<>();
+        ArrayList<Mood> historyList = new ArrayList<>();
+        ArrayList<ImageView> imageList = new ArrayList<>();
 
 
         RelativeLayout mJour1 = this.findViewById(R.id.activity_history_1_jour_layout);
@@ -82,6 +108,7 @@ public class HistoryActivity extends AppCompatActivity {
         Button mButton7 = findViewById(R.id.activity_history_7_jours_btn);
 
 
+        ///////////////////TEXTVIEW//////////////////////////////////////////
         TextView mTextView1 = findViewById(R.id.activity_history_text_jour_1);
         TextView mTextView2 = findViewById(R.id.activity_history_text_jour_2);
         TextView mTextView3 = findViewById(R.id.activity_history_text_jour_3);
@@ -100,7 +127,7 @@ public class HistoryActivity extends AppCompatActivity {
         mTextView7.setText(getString(R.string.jour_7));
 
 
-
+        ///DAY 7
 
         listLayout.add(mJour7);
         listButton.add(mButton7);
@@ -136,18 +163,6 @@ public class HistoryActivity extends AppCompatActivity {
         sdf = new SimpleDateFormat("ddMMyyyy");
         mCalendar = Calendar.getInstance();
 
-        /*YESTERDAY
-        mCalendar.add(Calendar.DATE, -1);
-        String mPast1 = sdf.format(mCalendar.getTime());
-        //mYesterday = Storage.load(this,mPast1);*/
-
-
-
-
-
-        listLayout.add(mJour1);
-        listButton.add(mButton1);
-        listTextView.add(mTextView1);
 
         mActivityYesterdayColor = getIntent().getIntExtra("YESTERDAY_COLOR", 0);
         mActivityYesterdayComment = getIntent().getStringExtra("YESTERDAY_COMMENT");
@@ -170,111 +185,151 @@ public class HistoryActivity extends AppCompatActivity {
         mActivity7DaysAgoColor = getIntent().getIntExtra("SEVEN_DAYS_AGO_COLOR", 0);
         mActivity7DaysAgoComment = getIntent().getStringExtra("SEVEN_DAYS_AGO_COMMENT");
 
-        mYesterday = "Yesterday";
+        Mood mood1 = new Mood();
+        Mood mood2 = new Mood();
+        Mood mood3 = new Mood();
+        Mood mood4 = new Mood();
+        Mood mood5 = new Mood();
+
+
+
+       mood1.setDifferentsMoods(SAD);
+       mood2.setDifferentsMoods(DISAPPOINTED);
+       mood3.setDifferentsMoods(NORMAL);
+       mood4.setDifferentsMoods(HAPPY);
+       mood5.setDifferentsMoods(SUPER_HAPPY);
+
+
+
+       displayMood(mood1.getDifferentsMoods(),mJour1);
+       displayMood(mood2.getDifferentsMoods(),mJour2);
+       displayMood(mood3.getDifferentsMoods(),mJour3);
+       displayMood(mood4.getDifferentsMoods(), mJour4);
+       displayMood(mood5.getDifferentsMoods(),mJour5);
+
+
+        mButton1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //      Toast.makeText(, Toast.LENGTH_LONG).show();
+            }
+        });
+        mButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            }
+        });
+        mButton3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            }
+        });
+        mButton4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            }
+        });
+        mButton5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            }
+        });
+        mButton6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            }
+        });
+        mButton7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+    }
+
+
+
+        /*mYesterday = "Yesterday";
         mTwoDaysAgo = "2 days ago";
         mThreeDaysAgo = "3 days ago";
         mFourDaysAgo = "4 days ago";
         mFiveDaysAgo = "5 days ago";
         mSixDaysAgo = "6 days ago";
-        mSevenDaysAgo = "7 days ago";
+        mSevenDaysAgo = "7 days ago";*/
+
+        //layoutConstructor(listLayout, listButton, listTextView);
 
 
 
 
-        //functionYesterdayOne (mYesterday,)
-
-
-
-        //layoutConstructor(listLayout,listButton,listTextView);
-        //constructor of different Layout (layout,button,textView)
-
-
-
-
-        /*private void layoutConstructor(ArrayList<RelativeLayout> listLayout, ArrayList<Button> listButton, ArrayList<TextView> listTextView) {
-
-
-
+    /*private void layoutConstructor(ArrayList<RelativeLayout> listLayout, ArrayList<Button> listButton, ArrayList<TextView> listTextView) {
         RelativeLayout relativeLayout = findViewById(R.id.historyButton);
-        for (int i = 1; 1<=listLayout.size(); i++){
 
-            SharedPreferences mSharedPref = getApplicationContext().getSharedPreferences("PREF_KEY_COMMENT",0);
+        for (int i = 0; 1 <= listLayout.size(); i++) {
+            SharedPreferences mSharedPref = getApplicationContext().getSharedPreferences("PREF_KEY_COMMENT", 0);
 
-            //recuperer le commentaire  mainActivity
-            String commentaire = mSharedPref.getString("COMMENT_"+i,null);
-            //Map<String, ?> mSharedPrefAll = mSharedPref.getAll();
+            String commentaire = mSharedPref.getString("COMMENT_" + i, null);
+            mSharedPref.getAll();
 
-            if (commentaire == null || commentaire.isEmpty()){
+            if (commentaire == null || commentaire.isEmpty()) {
 
-                listLayout.get(i-1).setBackgroundColor(Color.RED);
+                listLayout.get(i ).setBackgroundColor(Color.RED);
 
-                listButton.get(i-1).setVisibility(View.INVISIBLE);
+                listButton.get(i ).setVisibility(View.INVISIBLE);
 
-            }else{
+            } else {
 
-                listTextView.get(i-1).setText(mSharedPref.getString("COMMENT_"+i,null));
-                listLayout.get(i-1).setBackgroundColor(Color.TRANSPARENT);
+                listTextView.get(i - 1).setText(mSharedPref.getString("COMMENT_" + i, null));
+                listLayout.get(i - 1).setBackgroundColor(Color.TRANSPARENT);
             }
-
-        }*/
-
-
-    }
-
-
-
-
-
-    /*private void displayMood(Date date, RelativeLayout relativeLayout) {
-        //Change the width of the layout
-        Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        try {
-            display.getRealSize(size);
-        } catch (NoSuchMethodError err) {
-            display.getSize(size);
         }
-        int width = size.x;
-        int height = size.y;
 
-        // Get a mood from a past day
-        Mood moods = null;
+    }*/
 
-        // If there is no mood, there is nothing to display
-        if (moods == null) {
-            relativeLayout.setBackgroundColor(0);
-        } else {
-            // Display mood width and color
-            switch (moods) {
-                case Sad:
 
-                    listLayout.setBackgroundColor(getResources().getColor(R.color.sad_red));
-                    break;
-                case Disappointed:
-                    //relativeLayout.setLayoutParams(new LinearLayout.LayoutParams((width / 5) * 2,
-                            //LinearLayout.LayoutParams.MATCH_PARENT, 1));
-                    relativeLayout.setBackgroundColor(getResources().getColor(R.color.disappointed_grey));
-                    break;
-                case Normal:
-                    //relativeLayout.setLayoutParams(new LinearLayout.LayoutParams((width / 5) * 3,
-                            //LinearLayout.LayoutParams.MATCH_PARENT, 1));
-                    relativeLayout.setBackgroundColor(getResources().getColor(R.color.normal_blue));
-                    break;
-                case Happy:
-                    //relativeLayout.setLayoutParams(new LinearLayout.LayoutParams((width / 5) * 4,
-                            //LinearLayout.LayoutParams.MATCH_PARENT, 1));
-                    relativeLayout.setBackgroundColor(getResources().getColor(R.color.happy_green));
-                    break;
-                case SuperHappy:
-                    //relativeLayout.setLayoutParams(new LinearLayout.LayoutParams(width,
-                            //LinearLayout.LayoutParams.MATCH_PARENT, 1));
-                    relativeLayout.setBackgroundColor(getResources().getColor(R.color.super_happy_yellow));
-                    break;
-            }
+    /*private void disPlayComment{
+        for (int i = 0; i<historyList.size();i++){
+            ImageView imageView = imageList.get(i);
 
-        }*/
+            String comment = historyList.get(i).getComment();
+            if(!commen)
+        }
+    }*/
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void displayMood (DifferentsMoods differentsMoods, RelativeLayout layout){
+        Display display = getWindowManager().getDefaultDisplay();
+
+        int width =0;
+
+
+        switch (differentsMoods){
+            case SAD :
+
+                layout.setBackgroundColor(getColor(R.color.sad_red));
+               
+                break;
+
+            case DISAPPOINTED:
+                layout.setBackgroundColor(getColor(R.color.disappointed_grey));
+                break;
+
+            case NORMAL:
+                layout.setBackgroundColor(getColor(R.color.normal_blue));
+                break;
+
+            case HAPPY:
+                layout.setBackgroundColor(getColor(R.color.happy_green));
+                break;
+
+            case SUPER_HAPPY:
+                layout.setBackgroundColor(getColor(R.color.super_happy_yellow));
+                break;
+        }
+
     }
 
+}
 
 
 
