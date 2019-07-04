@@ -14,8 +14,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -31,6 +29,7 @@ import sara.openclassrooms.moodtracker.Fragment.MoodFragment2;
 import sara.openclassrooms.moodtracker.Fragment.MoodFragment3;
 import sara.openclassrooms.moodtracker.Fragment.MoodFragment4;
 import sara.openclassrooms.moodtracker.Fragment.MoodFragment5;
+import sara.openclassrooms.moodtracker.Model.DifferentsMoods;
 import sara.openclassrooms.moodtracker.Model.Mood;
 import sara.openclassrooms.moodtracker.Model.VerticalPagerAdapter;
 import sara.openclassrooms.moodtracker.Model.VerticalViewPager;
@@ -40,22 +39,18 @@ import sara.openclassrooms.moodtracker.R;
 public class MainActivity extends AppCompatActivity {
 
 
-    //ArrayList contains all the moods
-    private ArrayList<Mood> mDifferentMoodsArrayList;
-
-    private static final String SHARED_PREFS = "SHARED_PREFS";
     public static final String CURRENT_DAY = "CURRENT_DAY";
     public static final String PREF_KEY_COMMENT = "PREF_KEY_COMMENT";
+    public static final String PREFERENCES_KEY_MOOD = "mood";
+    private static final String SHARED_PREFS = "SHARED_PREFS";
     private static final String PREVIOUS_RECORDED_DAY = "PREVIOUS_RECORDED_DAY";
     private static final String PREF_BACKGROUND_COLOR = "PREF_BACKGROUND_COLOR";
-    public static final String PREFERENCES_KEY_MOOD = "mood";
-
-
-    private static final String SAVED_SMILEY_STATE ="SAVED_SMILEY_STATE";//key used to read and save Smiley state
-    private static final String CURRENT_MOOD_COMMENT="CURRENT_MOOD_COMMENT";
-
+    private static final String SAVED_SMILEY_STATE = "SAVED_SMILEY_STATE";//key used to read and save Smiley state
+    private static final String CURRENT_MOOD_COMMENT = "CURRENT_MOOD_COMMENT";
     final Context context = this;
     public EditText edResult;
+    //ArrayList contains all the moods
+    private ArrayList<Mood> mDifferentMoodsArrayList;
     private VerticalViewPager viewPager;
     private PagerAdapter pagerAdapter;
     private FloatingActionButton mBtnComment;
@@ -79,8 +74,14 @@ public class MainActivity extends AppCompatActivity {
     private String mCurrentDate;
     private int mDayChecker;
 
+    //removed one day at the date and set at 00:00
+    public static Date removeOneDay(Date d) {
+        Calendar dateStart = Calendar.getInstance();
+        dateStart.setTime(d);
+        dateStart.add(Calendar.DAY_OF_YEAR, -1);
 
-    
+        return dateStart.getTime();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,8 +93,6 @@ public class MainActivity extends AppCompatActivity {
 /*        requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);*/
-
-
 
 
         List<Fragment> list = new ArrayList<>();
@@ -113,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
         edResult = (EditText) findViewById(R.id.editTextComment);
 
 
-        mood = Storage.load(context,"MOOD" +dateToString(new Date()));
+        mood = Storage.load(context, "MOOD" + dateToString(new Date()));
 
 //        Toast.makeText(MainActivity.this,mood.getMood(),Toast.LENGTH_SHORT).show(); a voir ????
 
@@ -155,8 +154,6 @@ public class MainActivity extends AppCompatActivity {
                                         mSharedPref.edit().putString(PREF_KEY_COMMENT, mComment).apply();
 
 
-
-
                                     }
 
                                 })
@@ -181,11 +178,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent historyActivity = new Intent(MainActivity.this,HistoryActivity.class);
+                Intent historyActivity = new Intent(MainActivity.this, HistoryActivity.class);
 
 
                 startActivity(historyActivity);
-
 
 
             }
@@ -202,14 +198,12 @@ public class MainActivity extends AppCompatActivity {
         mCurrentDate = sdf.format(mCalendar.getTime());
 
 
-
-       mood = Storage.load(this,mCurrentDate);
+        mood = Storage.load(this, mCurrentDate);
 
 
         //Enregistrer un commentaire
         mSharedPref = getSharedPreferences("COMMENT" + dateToString(new Date()), MODE_PRIVATE);//affichage COMMENT26062019
         mSharedPref.edit().putString(PREF_KEY_COMMENT, mComment).apply();
-
 
 
         //////////////////////////////
@@ -236,11 +230,10 @@ public class MainActivity extends AppCompatActivity {
                 switch (position) {
 
 
-
                     case 0:
 
-                        String commentToday = getPreferences(MODE_PRIVATE).getString("COMMENT"+dateToString(new Date()),null);
-                        String moodKey = "MOOD"+dateToString(new Date());
+                        String commentToday = getPreferences(MODE_PRIVATE).getString("COMMENT" + dateToString(new Date()), null);
+                        String moodKey = "MOOD" + dateToString(new Date());
 
                         //CREER LE MOOD ET  METTRE LES VALEURS
                         Mood mood = new Mood();
@@ -251,24 +244,24 @@ public class MainActivity extends AppCompatActivity {
 
 
                         //ENREGISTRER LE MOOD DANS LES SHAREDPREFERENCES
-                        Storage.store(context,mood,moodKey);
+                        Storage.store(context, mood, moodKey);
 
 
                         //ENREGISTRER LA COULEUR
-                        mSharedPref.edit().putString(PREFERENCES_KEY_MOOD,"SAD_STATE").apply();
-                        mSharedPref.edit().putInt(PREF_BACKGROUND_COLOR,R.color.sad_red).apply();
+                        mSharedPref.edit().putString(PREFERENCES_KEY_MOOD, "SAD_STATE").apply();
+                        mSharedPref.edit().putInt(PREF_BACKGROUND_COLOR, R.color.sad_red).apply();
 
                         //ENREGISTRER LE COMMENTAIRE
-                        mSharedPref.edit().putString(SAVED_SMILEY_STATE,"SAD_STATE").apply();
-                        mSharedPref.edit().putInt(CURRENT_MOOD_COMMENT,R.color.sad_red);
+                        mSharedPref.edit().putString(SAVED_SMILEY_STATE, "SAD_STATE").apply();
+                        mSharedPref.edit().putInt(CURRENT_MOOD_COMMENT, R.color.sad_red);
 
 
-                        //Toast.makeText(MainActivity.this,MoodFragment1.class Toast.LENGTH_SHORT).show();    a voir avec Ndongo
+                        Toast.makeText(MainActivity.this, DifferentsMoods.SAD.name(), Toast.LENGTH_SHORT).show();
                         break;
 
                     case 1:
 
-                        commentToday = getPreferences(MODE_PRIVATE).getString("COMMENT"+dateToString(new Date()),null);
+                        commentToday = getPreferences(MODE_PRIVATE).getString("COMMENT" + dateToString(new Date()), null);
                         moodKey = "MOOD" + dateToString(new Date());
 
                         //CREER LE MOOD ET  METTRE LES VALEURS
@@ -280,24 +273,23 @@ public class MainActivity extends AppCompatActivity {
 
 
                         //ENREGISTRER LE MOOD DANS LES SHAREDPREFERENCES
-                        Storage.store(context,mood,moodKey);
+                        Storage.store(context, mood, moodKey);
 
 
                         //SAVE THE COLOR
-                        mSharedPref.edit().putString(PREFERENCES_KEY_MOOD,"DISAPPOINTED_STATE").apply();
-                        mSharedPref.edit().putInt(PREF_BACKGROUND_COLOR,R.color.disappointed_grey).apply();
+                        mSharedPref.edit().putString(PREFERENCES_KEY_MOOD, "DISAPPOINTED_STATE").apply();
+                        mSharedPref.edit().putInt(PREF_BACKGROUND_COLOR, R.color.disappointed_grey).apply();
 
                         //SAVE THE COMMENT
-                        mSharedPref.edit().putString(SAVED_SMILEY_STATE,"DISAPPOINTED_STATE").apply();
-                        mSharedPref.edit().putInt(CURRENT_MOOD_COMMENT,R.color.disappointed_grey).apply();
+                        mSharedPref.edit().putString(SAVED_SMILEY_STATE, "DISAPPOINTED_STATE").apply();
+                        mSharedPref.edit().putInt(CURRENT_MOOD_COMMENT, R.color.disappointed_grey).apply();
 
-                        //Toast.makeText(MainActivity.this, Mood.Disappointed.name(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, DifferentsMoods.DISAPPOINTED.name(), Toast.LENGTH_SHORT).show();
                         break;
 
                     case 2:
-                        commentToday = getPreferences(MODE_PRIVATE).getString("COMMENT"+dateToString(new Date()),null);
+                        commentToday = getPreferences(MODE_PRIVATE).getString("COMMENT" + dateToString(new Date()), null);
                         moodKey = "MOOD" + dateToString(new Date());
-
 
 
                         //CREER LE MOOD ET  METTRE LES VALEURS
@@ -308,23 +300,23 @@ public class MainActivity extends AppCompatActivity {
                         mood.setMood("NORMAL_STATE");//mettre l'etat du mood
 
                         //ENREGISTRER LE MOOD DANS LES SHAREDPREFERENCES
-                        Storage.store(context,mood,moodKey);
+                        Storage.store(context, mood, moodKey);
 
 
                         //SAVE THE COLOR
-                        mSharedPref.edit().putString(PREFERENCES_KEY_MOOD,"NORMAL_STATE").apply();
-                        mSharedPref.edit().putInt(PREF_BACKGROUND_COLOR,R.color.normal_blue).apply();
+                        mSharedPref.edit().putString(PREFERENCES_KEY_MOOD, "NORMAL_STATE").apply();
+                        mSharedPref.edit().putInt(PREF_BACKGROUND_COLOR, R.color.normal_blue).apply();
 
                         //SAVE THE COMMENT
-                        mSharedPref.edit().putString(SAVED_SMILEY_STATE,"NORMAL_STATE").apply();
-                        mSharedPref.edit().putInt(CURRENT_MOOD_COMMENT,R.color.disappointed_grey).apply();
+                        mSharedPref.edit().putString(SAVED_SMILEY_STATE, "NORMAL_STATE").apply();
+                        mSharedPref.edit().putInt(CURRENT_MOOD_COMMENT, R.color.disappointed_grey).apply();
 
-                        //Toast.makeText(MainActivity.this, Mood.class.getName(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this,DifferentsMoods.NORMAL.name(), Toast.LENGTH_SHORT).show();
                         break;
 
                     case 3:
-                        commentToday = getPreferences(MODE_PRIVATE).getString("COMMENT"+dateToString(new Date()),null);
-                        moodKey = "MOOD"+dateToString(new Date());
+                        commentToday = getPreferences(MODE_PRIVATE).getString("COMMENT" + dateToString(new Date()), null);
+                        moodKey = "MOOD" + dateToString(new Date());
 
                         //CREER LE MOOD ET  METTRE LES VALEURS
                         mood = new Mood();
@@ -334,25 +326,23 @@ public class MainActivity extends AppCompatActivity {
                         mood.setMood("HAPPY_STATE");//mettre l'etat du mood
 
 
-
                         //ENREGISTRER LE MOOD DANS LES SHAREDPREFERENCES
-                        Storage.store(context,mood,moodKey);
+                        Storage.store(context, mood, moodKey);
 
                         //SAVE THE COLOR
-                        mSharedPref.edit().putString(PREFERENCES_KEY_MOOD,"HAPPY_STATE ").apply();
-                        mSharedPref.edit().putInt(PREF_BACKGROUND_COLOR,R.color.happy_green).apply();
+                        mSharedPref.edit().putString(PREFERENCES_KEY_MOOD, "HAPPY_STATE ").apply();
+                        mSharedPref.edit().putInt(PREF_BACKGROUND_COLOR, R.color.happy_green).apply();
 
                         //SAVE THE COMMENT
-                        mSharedPref.edit().putString(SAVED_SMILEY_STATE,"HAPPY_STATE").apply();
-                        mSharedPref.edit().putInt(CURRENT_MOOD_COMMENT,R.color.happy_green).apply();
+                        mSharedPref.edit().putString(SAVED_SMILEY_STATE, "HAPPY_STATE").apply();
+                        mSharedPref.edit().putInt(CURRENT_MOOD_COMMENT, R.color.happy_green).apply();
 
-                        //Toast.makeText(MainActivity.this, Mood.Happy.name(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, DifferentsMoods.HAPPY.name(), Toast.LENGTH_SHORT).show();
                         break;
 
                     case 4:
-                        commentToday = getPreferences(MODE_PRIVATE).getString("COMMENT"+dateToString(new Date()), null);
-                        moodKey = "MOOD"+dateToString(new Date());
-
+                        commentToday = getPreferences(MODE_PRIVATE).getString("COMMENT" + dateToString(new Date()), null);
+                        moodKey = "MOOD" + dateToString(new Date());
 
 
                         //CREER LE MOOD ET  METTRE LES VALEURS
@@ -364,17 +354,17 @@ public class MainActivity extends AppCompatActivity {
 
 
                         //ENREGISTRER LE MOOD DANS LES SHAREDPREFERENCES
-                        Storage.store(context,mood,moodKey);
+                        Storage.store(context, mood, moodKey);
 
                         //SAVE THE COMMENT
-                        mSharedPref.edit().putString(SAVED_SMILEY_STATE,"SUPER_HAPPY_STATE").apply();
-                        mSharedPref.edit().putInt(CURRENT_MOOD_COMMENT,R.color.super_happy_yellow).apply();
+                        mSharedPref.edit().putString(SAVED_SMILEY_STATE, "SUPER_HAPPY_STATE").apply();
+                        mSharedPref.edit().putInt(CURRENT_MOOD_COMMENT, R.color.super_happy_yellow).apply();
 
                         //SAVE THE COLOR
-                        mSharedPref.edit().putString(PREFERENCES_KEY_MOOD,"SUPER_HAPPY_STATE").apply();
-                        mSharedPref.edit().putInt(PREF_BACKGROUND_COLOR,R.color.super_happy_yellow).apply();
+                        mSharedPref.edit().putString(PREFERENCES_KEY_MOOD, "SUPER_HAPPY_STATE").apply();
+                        mSharedPref.edit().putInt(PREF_BACKGROUND_COLOR, R.color.super_happy_yellow).apply();
 
-                        //Toast.makeText(MainActivity.this, Mood.SuperHappy.name(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, DifferentsMoods.SUPER_HAPPY.name(), Toast.LENGTH_SHORT).show();
                         break;
 
                     default:
@@ -389,18 +379,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        /*public static void saveColor (Context context, int backgroundColor) {
-            mSharedPref(context);
-            editor.putInt(PREF_BACKGROUND_COLOR, backgroundColor);
-            editor.apply();
-        }*/
+
     }
 
     private void mSharedPref(Context context) {
         mSharedPref = context.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         editor = mSharedPref.edit();
     }
-
 
     //////////////////////////////////////
     ///GET TIME AND DATE
@@ -432,41 +417,30 @@ public class MainActivity extends AppCompatActivity {
         String s;
         while (list.size() < 8) {
             s = dateToString(d);
-            comment= getPreferences(MODE_PRIVATE).getString("COMMENT"+s,null);
+            comment = getPreferences(MODE_PRIVATE).getString("COMMENT" + s, null);
             list.add(comment);
             d = stringToDate(s);
             d = removeOneDay(d);
+
 
         }
         return list;
     }
 
+    public ArrayList<Mood> sevenLastMood() {
+        ArrayList<Mood> list = new ArrayList<>();
 
-
-    public ArrayList<Mood> sevenLastMood(){
-        ArrayList<Mood>list = new ArrayList<>();
-
-        Date date = new Date ();
+        Date date = new Date();
         String sDate;
-        while (list.size()<=7){
+        while (list.size() <= 7) {
             sDate = dateToString(date);
-            String moodKey = "MOOD"+sDate; //affichage MOODddMMyyyy
-            Mood mood = Storage.load(context,moodKey);
+            String moodKey = "MOOD" + sDate; //affichage MOODddMMyyyy
+            Mood mood = Storage.load(context, moodKey);
             list.add(mood);
             date = stringToDate(sDate);
             date = removeOneDay(date);
         }
         return list;
-    }
-
-
-    //removed one day at the date and set at 00:00
-    public static Date removeOneDay(Date d) {
-        Calendar dateStart = Calendar.getInstance();
-        dateStart.setTime(d);
-        dateStart.add(Calendar.DAY_OF_YEAR, -1);
-
-        return dateStart.getTime();
     }
 
 }

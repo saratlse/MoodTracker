@@ -59,6 +59,10 @@ public class HistoryActivity extends AppCompatActivity {
     private Mood mFiveDaysAgo;
     private Mood mSixDaysAgo;
     private Mood mSevenDaysAgo;
+
+
+
+
     private int mActivityYesterdayColor, mActivity2DaysAgoColor, mActivity3DaysAgoColor, mActivity4DaysAgoColor, mActivity5DaysAgoColor, mActivity6DaysAgoColor, mActivity7DaysAgoColor;
     private String mActivityYesterdayComment, mActivity2DaysAgoComment, mActivity3DaysAgoComment, mActivity4DaysAgoComment, mActivity5DaysAgoComment, mActivity6DaysAgoComment, mActivity7DaysAgoComment;
     ListView mHistoryListView;
@@ -78,6 +82,8 @@ public class HistoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
+
+
 
         mSharedPref = getSharedPreferences("PREF_KEY_COMMENT", MODE_PRIVATE);
         mComment = mSharedPref.getString("REF_KEY_COMMENT", "");
@@ -127,24 +133,34 @@ public class HistoryActivity extends AppCompatActivity {
         mTextView7.setText(getString(R.string.jour_7));
 
 
-        ///DAY 7
 
+        ///DAY 7
         listLayout.add(mJour7);
         listButton.add(mButton7);
         listTextView.add(mTextView7);
+        mCalendar.add(Calendar.DATE,-7);
+        String mSevenDaysP = sdf.format(mCalendar.getTime());
+        mSevenDaysAgo = Storage.load(this,mSevenDaysP);
 
 
+        //DAY 6
         listLayout.add(mJour6);
         listButton.add(mButton6);
         listTextView.add(mTextView6);
+        mCalendar.add(Calendar.DATE,-6);
+        String mSixDaysP = sdf.format(mCalendar.getTime());
+        mSixDaysAgo = Storage.load(this,mSixDaysP);
 
+        //DAY 5
         listLayout.add(mJour5);
         listButton.add(mButton5);
         listTextView.add(mTextView5);
 
+        //DAY 4
         listLayout.add(mJour4);
         listButton.add(mButton4);
         listTextView.add(mTextView4);
+
 
         listLayout.add(mJour3);
         listButton.add(mButton3);
@@ -193,6 +209,8 @@ public class HistoryActivity extends AppCompatActivity {
 
 
 
+
+
        mood1.setDifferentsMoods(SAD);
        mood2.setDifferentsMoods(DISAPPOINTED);
        mood3.setDifferentsMoods(NORMAL);
@@ -208,9 +226,11 @@ public class HistoryActivity extends AppCompatActivity {
        displayMood(mood5.getDifferentsMoods(),mJour5);
 
 
+
         mButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 //      Toast.makeText(, Toast.LENGTH_LONG).show();
             }
         });
@@ -249,15 +269,9 @@ public class HistoryActivity extends AppCompatActivity {
 
 
 
-        /*mYesterday = "Yesterday";
-        mTwoDaysAgo = "2 days ago";
-        mThreeDaysAgo = "3 days ago";
-        mFourDaysAgo = "4 days ago";
-        mFiveDaysAgo = "5 days ago";
-        mSixDaysAgo = "6 days ago";
-        mSevenDaysAgo = "7 days ago";*/
 
-        //layoutConstructor(listLayout, listButton, listTextView);
+
+    //layoutConstructor(listLayout, listButton, listTextView);
 
 
 
@@ -307,7 +321,7 @@ public class HistoryActivity extends AppCompatActivity {
             case SAD :
 
                 layout.setBackgroundColor(getColor(R.color.sad_red));
-               
+
                 break;
 
             case DISAPPOINTED:
