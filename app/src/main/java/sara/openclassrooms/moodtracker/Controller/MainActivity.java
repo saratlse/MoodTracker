@@ -240,6 +240,7 @@ public class MainActivity extends AppCompatActivity {
                         mood.setComment(commentToday);//on met le commentaire du jour et on le recupere
                         mood.setPosition(position);
                         mood.setMoodBackgroundColor(R.color.sad_red);//mettre la couleur
+                        mood.setDifferentsMoods(DifferentsMoods.SAD);
                         mood.setMood("SAD_STATE");//mettre l'etat du mood
 
 
@@ -269,6 +270,7 @@ public class MainActivity extends AppCompatActivity {
                         mood.setComment(commentToday);//on met le commentaire du jour et on le recupere
                         mood.setPosition(position);
                         mood.setMoodBackgroundColor(R.color.disappointed_grey);//mettre la couleur
+                        mood.setDifferentsMoods(DifferentsMoods.DISAPPOINTED);
                         mood.setMood("DISAPPOINTED_STATE");//mettre l'etat du mood
 
 
@@ -297,6 +299,7 @@ public class MainActivity extends AppCompatActivity {
                         mood.setComment(commentToday);//on met le commentaire du jour et on le recupere
                         mood.setPosition(position);
                         mood.setMoodBackgroundColor(R.color.normal_blue);//mettre la couleur
+                        mood.setDifferentsMoods(DifferentsMoods.NORMAL);
                         mood.setMood("NORMAL_STATE");//mettre l'etat du mood
 
                         //ENREGISTRER LE MOOD DANS LES SHAREDPREFERENCES
@@ -323,6 +326,7 @@ public class MainActivity extends AppCompatActivity {
                         mood.setComment(commentToday);//on met le commentaire du jour et on le recupere
                         mood.setPosition(position);
                         mood.setMoodBackgroundColor(R.color.happy_green);//mettre la couleur
+                        mood.setDifferentsMoods(DifferentsMoods.HAPPY);
                         mood.setMood("HAPPY_STATE");//mettre l'etat du mood
 
 
@@ -350,6 +354,7 @@ public class MainActivity extends AppCompatActivity {
                         mood.setComment(commentToday);//on met le commentaire du jour et on le recupere
                         mood.setPosition(position);
                         mood.setMoodBackgroundColor(R.color.super_happy_yellow);//mettre la couleur
+                        mood.setDifferentsMoods(DifferentsMoods.SUPER_HAPPY);
                         mood.setMood("SUPER_HAPPY_STATE");
 
 
@@ -422,25 +427,9 @@ public class MainActivity extends AppCompatActivity {
             d = stringToDate(s);
             d = removeOneDay(d);
 
-
         }
         return list;
     }
 
-    public ArrayList<Mood> sevenLastMood() {
-        ArrayList<Mood> list = new ArrayList<>();
-
-        Date date = new Date();
-        String sDate;
-        while (list.size() <= 7) {
-            sDate = dateToString(date);
-            String moodKey = "MOOD" + sDate; //affichage MOODddMMyyyy
-            Mood mood = Storage.load(context, moodKey);
-            list.add(mood);
-            date = stringToDate(sDate);
-            date = removeOneDay(date);
-        }
-        return list;
-    }
 
 }
