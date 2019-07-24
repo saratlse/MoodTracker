@@ -215,21 +215,22 @@ public class HistoryActivity extends AppCompatActivity {
 
 
         //////MOOD1////
-        if (mood1.getComment () == null) {
-            mButton1.setVisibility (View.INVISIBLE);//faire pour tous les moods
+        if (mood1 != null && mood1.getComment() == null) {
+            mButton1.setVisibility (View.INVISIBLE);
         } else
             mButton1.setVisibility (View.VISIBLE);
         mButton1.setOnClickListener (new View.OnClickListener () {
             @Override
             public void onClick(View view) {
-                Toast toast = Toast.makeText (getApplicationContext (), sevenLastComment ().get (1), Toast.LENGTH_SHORT);
+
+                Toast toast = Toast.makeText (getApplicationContext (), sevenLastComment ().get(0), Toast.LENGTH_SHORT);
                 toast.show ();
             }
         });
 
 
         /////MOOD 2/////
-        if (mood2.getComment () == null) {
+        if (mood2 != null && mood2.getComment() == null) {
             mButton2.setVisibility (View.INVISIBLE);
         } else
             mButton2.setVisibility (View.VISIBLE);
@@ -237,59 +238,68 @@ public class HistoryActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Toast toast = Toast.makeText (getApplicationContext (), sevenLastComment ().get (2), Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText (getApplicationContext (), sevenLastComment ().get(1), Toast.LENGTH_SHORT);
                 toast.show ();
             }
         });
 
         //////MOOD 3///////
-        if (mood3.getComment () == null) {
+        if (mood3 != null && mood3.getComment() == null) {
             mButton3.setVisibility (View.INVISIBLE);
         } else
             mButton3.setVisibility (View.VISIBLE);
         mButton3.setOnClickListener (new View.OnClickListener () {
             @Override
             public void onClick(View view) {
+                Toast toast = Toast.makeText (getApplicationContext (), sevenLastComment ().get(2), Toast.LENGTH_SHORT);
+                toast.show ();
+
             }
         });
 
         //////MOOD 4//////////
-        if (mood4.getComment () == null) {
+        if (mood4 != null && mood4.getComment() == null) {
             mButton4.setVisibility (View.INVISIBLE);
         } else
             mButton4.setVisibility (View.VISIBLE);
         mButton4.setOnClickListener (new View.OnClickListener () {
             @Override
             public void onClick(View view) {
+                Toast toast = Toast.makeText (getApplicationContext (), sevenLastComment ().get(3), Toast.LENGTH_SHORT);
+                toast.show ();
             }
         });
 
 
         ///MOOD 5//////////////////
-        if (mood5.getComment () == null) {
+        if (mood5 != null && mood5.getComment() == null) {
             mButton5.setVisibility (View.INVISIBLE);
         } else
             mButton5.setVisibility (View.VISIBLE);
         mButton5.setOnClickListener (new View.OnClickListener () {
             @Override
             public void onClick(View view) {
+                Toast toast = Toast.makeText (getApplicationContext (), sevenLastComment ().get(4), Toast.LENGTH_SHORT);
+                toast.show ();
             }
         });
 
 
         /////MOOD 6 ///////////////////
-        if (mood6.getComment () == null) {
+        if (mood6 != null && mood6.getComment() == null) {
             mButton6.setVisibility (View.INVISIBLE);
         } else
             mButton6.setVisibility (View.VISIBLE);
         mButton6.setOnClickListener (new View.OnClickListener () {
             @Override
             public void onClick(View view) {
+                Toast toast = Toast.makeText (getApplicationContext (), sevenLastComment ().get(5), Toast.LENGTH_SHORT);
+                toast.show ();
             }
         });
 
         //////MOOD 7////////////////
-        if (mood7.getComment () == null) {
+        if (mood7 != null && mood7.getComment() == null) {
             mButton7.setVisibility (View.INVISIBLE);
         } else
             mButton7.setVisibility (View.VISIBLE);
@@ -297,18 +307,28 @@ public class HistoryActivity extends AppCompatActivity {
         mButton7.setOnClickListener (new View.OnClickListener () {
             @Override
             public void onClick(View v) {
+                Toast toast = Toast.makeText (getApplicationContext (), sevenLastComment ().get(6), Toast.LENGTH_SHORT);
+                toast.show ();
 
             }
         });
 
-
+    if(mood1 != null){
         displayMood (mood1.getDifferentsMoods (), mJour1);
+    }if(mood2 != null){
         displayMood (mood2.getDifferentsMoods (), mJour2);
+    }if(mood3 != null){
         displayMood (mood3.getDifferentsMoods (), mJour3);
+    }if(mood4 != null){
         displayMood (mood4.getDifferentsMoods (), mJour4);
+    }if (mood5 != null){
         displayMood (mood5.getDifferentsMoods (), mJour5);
+    }if (mood6 != null){
         displayMood (mood6.getDifferentsMoods (), mJour6);
+    }if(mood7 != null){
         displayMood (mood7.getDifferentsMoods (), mJour7);
+    }
+
 
 
     }
