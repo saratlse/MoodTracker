@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -75,9 +76,9 @@ public class HistoryActivity extends AppCompatActivity {
         ArrayList<Button> listButton = new ArrayList<> ();
         ArrayList<TextView> listTextView = new ArrayList<> ();
         ArrayList<ImageView> imageList = new ArrayList<> ();
-        ArrayList<Mood> historyList = new ArrayList<> ();
+        //ArrayList<Mood> historyList = new ArrayList<> ();
 
-        RelativeLayout mJour1 = this.findViewById (R.id.activity_history_1_jour_layout);
+        final RelativeLayout mJour1 = this.findViewById (R.id.activity_history_1_jour_layout);
         RelativeLayout mJour2 = this.findViewById (R.id.activity_history_2_jours_layout);
         RelativeLayout mJour3 = this.findViewById (R.id.activity_history_3_jours_layout);
         RelativeLayout mJour4 = this.findViewById (R.id.activity_history_4_jours_layout);
@@ -96,8 +97,8 @@ public class HistoryActivity extends AppCompatActivity {
 
 
         ///////////////////TEXTVIEW//////////////////////////////////////////
-        TextView mTextView1 = findViewById (R.id.activity_history_text_jour_1);
-        TextView mTextView2 = findViewById (R.id.activity_history_text_jour_2);
+        final TextView mTextView1 = findViewById (R.id.activity_history_text_jour_1);
+        final TextView mTextView2 = findViewById (R.id.activity_history_text_jour_2);
         TextView mTextView3 = findViewById (R.id.activity_history_text_jour_3);
         TextView mTextView4 = findViewById (R.id.activity_history_text_jour_4);
         TextView mTextView5 = findViewById (R.id.activity_history_text_jour_5);
@@ -165,7 +166,7 @@ public class HistoryActivity extends AppCompatActivity {
         listButton.add (mButton2);
         listTextView.add (mTextView2);
         mCalendar.add (Calendar.DATE,-2);
-        String mTwoDaysP = sdf.format (mCalendar.getTime ());
+        final String mTwoDaysP = sdf.format (mCalendar.getTime ());
         mTwoDaysAgo = Storage.load (this,mTwoDaysP);
 
 
@@ -174,7 +175,7 @@ public class HistoryActivity extends AppCompatActivity {
         listButton.add (mButton1);
         listTextView.add (mTextView1);
         mCalendar.add (Calendar.DATE,-1);
-        String mOneDayP = sdf.format (mCalendar.getTime ());
+        final String mOneDayP = sdf.format (mCalendar.getTime ());
         mYesterday = Storage.load (this,mOneDayP);
 
 
@@ -215,22 +216,26 @@ public class HistoryActivity extends AppCompatActivity {
 
 
         //////MOOD1////
-        if (mood1 != null && mood1.getComment() == null) {
+        if (mood1 == null) {
             mButton1.setVisibility (View.INVISIBLE);
+            Toast.makeText(this, "Vous n'avez pas encore d'historique :(", Toast.LENGTH_LONG).show();
         } else
             mButton1.setVisibility (View.VISIBLE);
+
         mButton1.setOnClickListener (new View.OnClickListener () {
             @Override
             public void onClick(View view) {
 
-                Toast toast = Toast.makeText (getApplicationContext (), sevenLastComment ().get(0), Toast.LENGTH_SHORT);
-                toast.show ();
+                Toast.makeText (getApplicationContext (),historyList.get (0).getMood (),Toast.LENGTH_SHORT).show ();//je recupere l'etat SAD STATE
+
+
+
             }
         });
 
 
         /////MOOD 2/////
-        if (mood2 != null && mood2.getComment() == null) {
+        if (mood2 == null || mood2.getComment() == null) {
             mButton2.setVisibility (View.INVISIBLE);
         } else
             mButton2.setVisibility (View.VISIBLE);
@@ -238,68 +243,64 @@ public class HistoryActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Toast toast = Toast.makeText (getApplicationContext (), sevenLastComment ().get(1), Toast.LENGTH_SHORT);
-                toast.show ();
+                Toast.makeText (getApplicationContext (),historyList.get (1).getMood (),Toast.LENGTH_SHORT).show ();
+
             }
         });
 
         //////MOOD 3///////
-        if (mood3 != null && mood3.getComment() == null) {
+        if (mood3 == null || mood3.getComment() == null) {
             mButton3.setVisibility (View.INVISIBLE);
         } else
             mButton3.setVisibility (View.VISIBLE);
         mButton3.setOnClickListener (new View.OnClickListener () {
             @Override
             public void onClick(View view) {
-                Toast toast = Toast.makeText (getApplicationContext (), sevenLastComment ().get(2), Toast.LENGTH_SHORT);
-                toast.show ();
+                Toast.makeText (getApplicationContext (),historyList.get (2).getMood (),Toast.LENGTH_SHORT).show ();
 
             }
         });
 
         //////MOOD 4//////////
-        if (mood4 != null && mood4.getComment() == null) {
+        if (mood4 == null || mood4.getComment() == null) {
             mButton4.setVisibility (View.INVISIBLE);
         } else
             mButton4.setVisibility (View.VISIBLE);
         mButton4.setOnClickListener (new View.OnClickListener () {
             @Override
             public void onClick(View view) {
-                Toast toast = Toast.makeText (getApplicationContext (), sevenLastComment ().get(3), Toast.LENGTH_SHORT);
-                toast.show ();
+                Toast.makeText (getApplicationContext (),historyList.get (3).getMood (),Toast.LENGTH_SHORT).show ();
             }
         });
 
 
         ///MOOD 5//////////////////
-        if (mood5 != null && mood5.getComment() == null) {
+        if (mood5 == null || mood5.getComment() == null) {
             mButton5.setVisibility (View.INVISIBLE);
         } else
             mButton5.setVisibility (View.VISIBLE);
         mButton5.setOnClickListener (new View.OnClickListener () {
             @Override
             public void onClick(View view) {
-                Toast toast = Toast.makeText (getApplicationContext (), sevenLastComment ().get(4), Toast.LENGTH_SHORT);
-                toast.show ();
+                Toast.makeText (getApplicationContext (),historyList.get (4).getMood (),Toast.LENGTH_SHORT).show ();
             }
         });
 
 
         /////MOOD 6 ///////////////////
-        if (mood6 != null && mood6.getComment() == null) {
+        if (mood6 == null || mood6.getComment() == null) {
             mButton6.setVisibility (View.INVISIBLE);
         } else
             mButton6.setVisibility (View.VISIBLE);
         mButton6.setOnClickListener (new View.OnClickListener () {
             @Override
             public void onClick(View view) {
-                Toast toast = Toast.makeText (getApplicationContext (), sevenLastComment ().get(5), Toast.LENGTH_SHORT);
-                toast.show ();
+                Toast.makeText (getApplicationContext (),historyList.get (5).getMood (),Toast.LENGTH_SHORT).show ();
             }
         });
 
         //////MOOD 7////////////////
-        if (mood7 != null && mood7.getComment() == null) {
+        if (mood7 == null || mood7.getComment() == null) {
             mButton7.setVisibility (View.INVISIBLE);
         } else
             mButton7.setVisibility (View.VISIBLE);
@@ -307,9 +308,7 @@ public class HistoryActivity extends AppCompatActivity {
         mButton7.setOnClickListener (new View.OnClickListener () {
             @Override
             public void onClick(View v) {
-                Toast toast = Toast.makeText (getApplicationContext (), sevenLastComment ().get(6), Toast.LENGTH_SHORT);
-                toast.show ();
-
+                Toast.makeText (getApplicationContext (),historyList.get (6).getMood (),Toast.LENGTH_SHORT).show ();
             }
         });
 
@@ -398,15 +397,17 @@ public class HistoryActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void displayMood(DifferentsMoods differentsMoods, RelativeLayout layout) {
         Display display = getWindowManager ().getDefaultDisplay ();
-
+        Point size = new Point ();
         int width = 0;
 
-
+        try {
+            display.getRealSize (size);
+        }catch (NoSuchMethodError error){
+            display.getSize (size);
+        }
         switch (differentsMoods) {
             case SAD:
-
                 layout.setBackgroundColor (getColor (R.color.sad_red));
-
                 break;
 
             case DISAPPOINTED:
