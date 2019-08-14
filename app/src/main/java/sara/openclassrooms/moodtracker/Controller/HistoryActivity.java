@@ -227,7 +227,7 @@ public class HistoryActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 Toast.makeText (getApplicationContext (),historyList.get (0).getMood (),Toast.LENGTH_SHORT).show ();//je recupere l'etat SAD STATE
-
+                //Toast.makeText (getApplicationContext (),mood1.getComment (),Toast.LENGTH_SHORT).show ();
 
 
             }

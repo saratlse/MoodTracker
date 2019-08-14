@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String CURRENT_MOOD_COMMENT = "CURRENT_MOOD_COMMENT";
     final Context context = this;
     public EditText edResult;
+
     //ArrayList contains all the moods
     private ArrayList<Mood> mDifferentMoodsArrayList;
     private VerticalViewPager viewPager;
@@ -71,28 +72,23 @@ public class MainActivity extends AppCompatActivity {
 
 
     private int mPosition;
-    private String mCurrentDate;
+
     private int mDayChecker;
 
-    //removed one day at the date and set at 00:00
-    public static Date removeOneDay(Date d) {
-        Calendar dateStart = Calendar.getInstance();
-        dateStart.setTime(d);
-        dateStart.add(Calendar.DAY_OF_YEAR, -1);
+    private DatabaseManager databaseManager;
+    public static String userInputValue;
+    public static String comment;
+    public static int moodValue = 3 ;
+    private String mCurrentDate;
 
-        return dateStart.getTime();
-    }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-
-        //permet  d'enlever la top bar ou bar de navigation
-/*        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);*/
 
 
         List<Fragment> list = new ArrayList<>();
@@ -114,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
 
         mood = Storage.load(context, "MOOD" + dateToString(new Date()));
 
-//        Toast.makeText(MainActivity.this,mood.getMood(),Toast.LENGTH_SHORT).show(); a voir ????
+        databaseManager = new DatabaseManager (this);
 
 
         /////////////////////////////////
@@ -152,6 +148,8 @@ public class MainActivity extends AppCompatActivity {
                                         mComment = textInput.getText().toString();
                                         mSharedPref = getSharedPreferences("COMMENT", MODE_PRIVATE);
                                         mSharedPref.edit().putString(PREF_KEY_COMMENT, mComment).apply();
+                                        //String userInputValue = textInput.getText ().toString ();
+                                        //databaseManager.insertMood (moodValue,mCurrentDate,userInputValue );
 
 
                                     }
@@ -171,12 +169,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         //////////////////////////////
         /// BUTTON HISTORY //////////
         /////////////////////////////
         mBtnHistoric.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                //databaseManager.insertMood (comment,mCurrentDate,userInputValue);
+
+                //Enregistrer un commentaire
+                mSharedPref = getSharedPreferences("COMMENT" + dateToString(new Date()), MODE_PRIVATE);//affichage COMMENT26062019
+                mSharedPref.edit().putString(PREF_KEY_COMMENT, mComment).apply();
+
 
                 Intent historyActivity = new Intent(MainActivity.this, HistoryActivity.class);
 
@@ -187,6 +193,8 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
+
+        databaseManager = new DatabaseManager (this);
 
 
         //DATE
@@ -199,7 +207,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         mood = Storage.load(this, mCurrentDate);
-
 
         //Enregistrer un commentaire
         mSharedPref = getSharedPreferences("COMMENT" + dateToString(new Date()), MODE_PRIVATE);//affichage COMMENT26062019
@@ -227,7 +234,7 @@ public class MainActivity extends AppCompatActivity {
             public void onPageSelected(int position) {
 
 
-                switch (position) {
+                switch (position) {//si la variable position est egale a 0 1 ...
 
 
                     case 0:
@@ -411,6 +418,14 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         return d;
+    }
+    //removed one day at the date and set at 00:00
+    public static Date removeOneDay(Date d) {
+        Calendar dateStart = Calendar.getInstance();
+        dateStart.setTime(d);
+        dateStart.add(Calendar.DAY_OF_YEAR, -1);
+
+        return dateStart.getTime();
     }
 
     //recovers seven last comment in arrayList
