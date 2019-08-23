@@ -20,6 +20,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
     public static final String COMMENT = "comment";
     public static final String MOOD = "mood";
 
+
     public DatabaseManager(Context context) {//constructeur context en parametre c'est la classe de base
         super (context, DATA_BASE_NAME, null, DATABASE_VERSION);//4 parametres
     }
@@ -30,7 +31,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String strSql = "create table T_Mood ("
-                + "     idMood INTEGER primary key autoincrement,"
+                + "     _id INTEGER primary key autoincrement,"
                 + "     comment TEXT not null,"
                 + "     mood INTEGER not null,"
                 + "     when_ INTEGER not null"
@@ -55,15 +56,16 @@ public class DatabaseManager extends SQLiteOpenHelper {
     public void insertMood(int moodValue, String userInputValue, String mCurrentDate) {
 
         //passer la date en string
-        //String pattern = "dd-MM-yyyy";
-        //SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        String pattern = "dd-MM-yyyy";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 
 
-        //mCurrentDate = simpleDateFormat.format (new Date ());
+        mCurrentDate = simpleDateFormat.format (new Date ());
+        //String mCurrentDateIsmCurrentDate = mCurrentDateIsmCurrentDate();
 
 
-        userInputValue = userInputValue.replace ("'", "''");
-        String strSql = "insert into T_Mood (comment,when_) values ('" + moodValue + "'," + mCurrentDate + "," + userInputValue + "," + new Date ().getTime () + ")";
+//       userInputValue = userInputValue.replace ("'", "''");
+        String strSql = "insert into T_Mood (mood,comment,when_) values (" + moodValue + ",'" + userInputValue + "','" + simpleDateFormat.format (new Date ()) + "')";
 
         //j'envoie mon ordre sql a la base this=dataBaseManager
         this.getWritableDatabase ().execSQL (strSql);

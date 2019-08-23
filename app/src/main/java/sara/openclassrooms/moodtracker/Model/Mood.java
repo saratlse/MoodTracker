@@ -14,6 +14,7 @@ public class Mood {
 
 
 
+
     //constructor
     public Mood(String comment, int position, int moodBackgroundColor){
         this.comment = comment;

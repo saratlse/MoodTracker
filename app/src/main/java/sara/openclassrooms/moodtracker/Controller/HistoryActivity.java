@@ -60,12 +60,20 @@ public class HistoryActivity extends AppCompatActivity {
     private Object DifferentsMoods;
 
 
+    private DatabaseManager databaseManager;
+    String mCurrentDate = "dd-MM-yyyy";
+    SimpleDateFormat Sdf = new SimpleDateFormat(mCurrentDate);
+    private String userInputValue;
+
+
     @TargetApi(Build.VERSION_CODES.M)
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate (savedInstanceState);
         setContentView (R.layout.activity_history);
+
+        databaseManager = new DatabaseManager (this);
 
 
         mSharedPref = getSharedPreferences ("PREF_KEY_COMMENT", MODE_PRIVATE);

@@ -12,6 +12,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -82,6 +83,10 @@ public class MainActivity extends AppCompatActivity {
     private String mCurrentDate;
 
 
+    String pattern = "dd-MM-yyyy";
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
+
 
 
     @Override
@@ -110,7 +115,10 @@ public class MainActivity extends AppCompatActivity {
 
         mood = Storage.load(context, "MOOD" + dateToString(new Date()));
 
-        databaseManager = new DatabaseManager (this);
+        //je recupere le context de mon activity
+        databaseManager = new DatabaseManager (getBaseContext ());
+        //String userInputValue = textInput.getText ().toString ();
+//        databaseManager.insertMood (moodValue,userInputValue,mCurrentDate );
 
 
         /////////////////////////////////
@@ -145,13 +153,20 @@ public class MainActivity extends AppCompatActivity {
                                 new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
+
+                                        String userInputValue = textInput.getText().toString().trim();
+                                        String mCurrentDate = simpleDateFormat.format (new Date ());
+
+                                        databaseManager.insertMood (moodValue, userInputValue,mCurrentDate);
+
+
+
                                         mComment = textInput.getText().toString();
                                         mSharedPref = getSharedPreferences("COMMENT", MODE_PRIVATE);
                                         mSharedPref.edit().putString(PREF_KEY_COMMENT, mComment).apply();
-                                        //String userInputValue = textInput.getText ().toString ();
-                                        //databaseManager.insertMood (moodValue,mCurrentDate,userInputValue );
 
 
+                                        Log.i("DATABASE", "insertCommand invoked");
                                     }
 
                                 })
@@ -177,7 +192,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                //databaseManager.insertMood (comment,mCurrentDate,userInputValue);
+
+                String mCurrentDate =simpleDateFormat.format (new Date ());
+                databaseManager.insertMood (moodValue, userInputValue,mCurrentDate);
+
 
                 //Enregistrer un commentaire
                 mSharedPref = getSharedPreferences("COMMENT" + dateToString(new Date()), MODE_PRIVATE);//affichage COMMENT26062019
@@ -265,6 +283,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                         Toast.makeText(MainActivity.this, DifferentsMoods.SAD.name(), Toast.LENGTH_SHORT).show();
+
                         break;
 
                     case 1:
