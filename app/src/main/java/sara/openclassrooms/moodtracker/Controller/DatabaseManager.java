@@ -45,7 +45,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
     }
 
     //methode qui met a jour ma base de donnee changement de version
-    //on met a jour ici lanouvelle based
+    //on met a jour ici la nouvelle base de donnee
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         String strSQL = "drop table T_Mood";
