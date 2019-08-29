@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseManager databaseManager;
     public static String userInputValue;
     public static String comment;
-    public static int moodValue = 3 ;
+    public static int moodValue = 0 ;
     private String mCurrentDate;
 
 
@@ -251,6 +251,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
 
+                moodValue = position;
 
                 switch (position) {//si la variable position est egale a 0 1 ...
 

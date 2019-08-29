@@ -65,7 +65,6 @@ public class HistoryActivity extends AppCompatActivity {
     SimpleDateFormat Sdf = new SimpleDateFormat(mCurrentDate);
     private String userInputValue;
 
-
     @TargetApi(Build.VERSION_CODES.M)
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -74,6 +73,7 @@ public class HistoryActivity extends AppCompatActivity {
         setContentView (R.layout.activity_history);
 
         databaseManager = new DatabaseManager (this);
+        //historyList = databaseManager.getLast7Mood ();
 
 
         mSharedPref = getSharedPreferences ("PREF_KEY_COMMENT", MODE_PRIVATE);
@@ -84,7 +84,7 @@ public class HistoryActivity extends AppCompatActivity {
         ArrayList<Button> listButton = new ArrayList<> ();
         ArrayList<TextView> listTextView = new ArrayList<> ();
         ArrayList<ImageView> imageList = new ArrayList<> ();
-        //ArrayList<Mood> historyList = new ArrayList<> ();
+
 
         final RelativeLayout mJour1 = this.findViewById (R.id.activity_history_1_jour_layout);
         RelativeLayout mJour2 = this.findViewById (R.id.activity_history_2_jours_layout);
@@ -416,6 +416,7 @@ public class HistoryActivity extends AppCompatActivity {
         switch (differentsMoods) {
             case SAD:
                 layout.setBackgroundColor (getColor (R.color.sad_red));
+
                 break;
 
             case DISAPPOINTED:

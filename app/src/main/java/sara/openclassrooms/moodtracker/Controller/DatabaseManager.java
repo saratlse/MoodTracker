@@ -1,11 +1,13 @@
 package sara.openclassrooms.moodtracker.Controller;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 
@@ -34,7 +36,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
                 + "     _id INTEGER primary key autoincrement,"
                 + "     comment TEXT not null,"
                 + "     mood INTEGER not null,"
-                + "     when_ INTEGER not null"
+                + "     when_ TEXT not null"
                 + ")";
 
         db.execSQL (strSql);//j'excute ma ligne de code
@@ -72,5 +74,30 @@ public class DatabaseManager extends SQLiteOpenHelper {
         Log.i ("DATABASE", "insertScore invoked");
 
     }
+
+
+    //creation du cursor
+    //on remplit la liste
+    public ArrayList<MoodData> getLast7Mood(){
+
+        String[] columns = {"mood","comment","when"};
+        String[] selectArgs ={};
+        Cursor cursor = getReadableDatabase ().query ("T_Mood",columns,"",selectArgs,"","","");
+                ArrayList<MoodData> moodDataArrayList = new ArrayList<> ();
+        while (cursor.moveToNext ())   {
+            MoodData moodData = new MoodData (cursor.getInt (0),cursor.getInt (1),cursor.getString (2),cursor.getString (3));
+
+            String COMMENT = cursor.getString (cursor.getColumnIndex ("comment"));
+            String WHEN_ = cursor.getString (cursor.getColumnIndex ("when_"));
+            int MOOD = cursor.getInt (cursor.getColumnIndex ("mood"));
+            moodData.setMOOD (MOOD);
+            moodData.setCOMMENT (COMMENT);
+            moodData.setWHEN_ (WHEN_);
+            moodDataArrayList.add (moodData);
+        }
+return moodDataArrayList;
+    }
+
+
 }
 
