@@ -36,11 +36,17 @@ public class HistoryActivity extends AppCompatActivity {
     final Context context = this;
     ListView mHistoryListView;
     TextView mHistoryTextView;
+
+
     ArrayList<RelativeLayout> listLayout = new ArrayList<> ();
     ArrayList<Button> listButton = new ArrayList<> ();
     ArrayList<TextView> listTextView = new ArrayList<> ();
-    ArrayList<Mood> historyList = new ArrayList<> ();
+    ArrayList<MoodData> historyList = new ArrayList<> ();
     ArrayList<ImageView> imageList = new ArrayList<> ();
+    String mCurrentDate = "dd-MM-yyyy";
+    SimpleDateFormat Sdf = new SimpleDateFormat(mCurrentDate);
+
+
     private int width;
     private int height;
     private SharedPreferences mSharedPref;
@@ -58,12 +64,16 @@ public class HistoryActivity extends AppCompatActivity {
     private int mActivityYesterdayColor, mActivity2DaysAgoColor, mActivity3DaysAgoColor, mActivity4DaysAgoColor, mActivity5DaysAgoColor, mActivity6DaysAgoColor, mActivity7DaysAgoColor;
     private String mActivityYesterdayComment, mActivity2DaysAgoComment, mActivity3DaysAgoComment, mActivity4DaysAgoComment, mActivity5DaysAgoComment, mActivity6DaysAgoComment, mActivity7DaysAgoComment;
     private Object DifferentsMoods;
-
-
     private DatabaseManager databaseManager;
-    String mCurrentDate = "dd-MM-yyyy";
-    SimpleDateFormat Sdf = new SimpleDateFormat(mCurrentDate);
     private String userInputValue;
+
+    //removed one day at the date and set at 00:00
+    public static Date removeOneDay(Date d) {
+        Calendar dateStart = Calendar.getInstance ();
+        dateStart.setTime (d);
+        dateStart.add (Calendar.DAY_OF_YEAR, -1);
+        return dateStart.getTime ();
+    }
 
     @TargetApi(Build.VERSION_CODES.M)
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -73,7 +83,7 @@ public class HistoryActivity extends AppCompatActivity {
         setContentView (R.layout.activity_history);
 
         databaseManager = new DatabaseManager (this);
-        //historyList = databaseManager.getLast7Mood ();
+        historyList = databaseManager.getLast7Mood();
 
 
         mSharedPref = getSharedPreferences ("PREF_KEY_COMMENT", MODE_PRIVATE);
@@ -213,17 +223,26 @@ public class HistoryActivity extends AppCompatActivity {
 
 
 
+        //on doit recuperer le mood de la base de donnee qui est un int
         historyList = sevenLastMood ();
-        final Mood mood1 = historyList.get (0);
-        final Mood mood2 = historyList.get (1);
-        final Mood mood3 = historyList.get (2);
-        final Mood mood4 = historyList.get (3);
-        final Mood mood5 = historyList.get (4);
-        final Mood mood6 = historyList.get (5);
-        final Mood mood7 = historyList.get (6);
+        final MoodData mood1 = historyList.get(0);
+        final MoodData mood2 = historyList.get(1);
+        final MoodData mood3 = historyList.get(2);
+        final MoodData mood4 = historyList.get(3);
+        final MoodData mood5 = historyList.get(4);
+        final MoodData mood6 = historyList.get(5);
+        final MoodData mood7 = historyList.get(6);
+
+        /*final Mood mood1 = new Mood();
+        final Mood mood2 = new Mood();
+        final Mood mood3 = new Mood();
+        final Mood mood4 = new Mood();
+        final Mood mood5 = new Mood();
+        final Mood mood6 = new Mood();
+        final Mood mood7 = new Mood();*/
 
 
-        //////MOOD1////
+       /* //////MOOD1////
         if (mood1 == null) {
             mButton1.setVisibility (View.INVISIBLE);
             Toast.makeText(this, "Vous n'avez pas encore d'historique :(", Toast.LENGTH_LONG).show();
@@ -233,17 +252,15 @@ public class HistoryActivity extends AppCompatActivity {
         mButton1.setOnClickListener (new View.OnClickListener () {
             @Override
             public void onClick(View view) {
-
-                Toast.makeText (getApplicationContext (),historyList.get (0).getMood (),Toast.LENGTH_SHORT).show ();//je recupere l'etat SAD STATE
-                //Toast.makeText (getApplicationContext (),mood1.getComment (),Toast.LENGTH_SHORT).show ();
+                Toast.makeText (getApplicationContext (),historyList.get(0).getCOMMENT(),Toast.LENGTH_SHORT).show ();//je recupere l'etat SAD STATE
 
 
             }
-        });
+        });*/
 
 
         /////MOOD 2/////
-        if (mood2 == null || mood2.getComment() == null) {
+        if (mood2 == null || mood2.getCOMMENT() == null) {
             mButton2.setVisibility (View.INVISIBLE);
         } else
             mButton2.setVisibility (View.VISIBLE);
@@ -251,64 +268,64 @@ public class HistoryActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Toast.makeText (getApplicationContext (),historyList.get (1).getMood (),Toast.LENGTH_SHORT).show ();
+                Toast.makeText (getApplicationContext (),historyList.get(1).getCOMMENT(),Toast.LENGTH_SHORT).show ();
 
             }
         });
 
         //////MOOD 3///////
-        if (mood3 == null || mood3.getComment() == null) {
+        if (mood3 == null || mood3.getCOMMENT() == null) {
             mButton3.setVisibility (View.INVISIBLE);
         } else
             mButton3.setVisibility (View.VISIBLE);
         mButton3.setOnClickListener (new View.OnClickListener () {
             @Override
             public void onClick(View view) {
-                Toast.makeText (getApplicationContext (),historyList.get (2).getMood (),Toast.LENGTH_SHORT).show ();
+                Toast.makeText (getApplicationContext (),historyList.get(2).getCOMMENT (),Toast.LENGTH_SHORT).show ();
 
             }
         });
 
         //////MOOD 4//////////
-        if (mood4 == null || mood4.getComment() == null) {
+        if (mood4 == null || mood4.getCOMMENT () == null) {
             mButton4.setVisibility (View.INVISIBLE);
         } else
             mButton4.setVisibility (View.VISIBLE);
         mButton4.setOnClickListener (new View.OnClickListener () {
             @Override
             public void onClick(View view) {
-                Toast.makeText (getApplicationContext (),historyList.get (3).getMood (),Toast.LENGTH_SHORT).show ();
+                Toast.makeText (getApplicationContext (),historyList.get(3).getCOMMENT (),Toast.LENGTH_SHORT).show ();
             }
         });
 
 
         ///MOOD 5//////////////////
-        if (mood5 == null || mood5.getComment() == null) {
+        if (mood5 == null || mood5.getCOMMENT () == null) {
             mButton5.setVisibility (View.INVISIBLE);
         } else
             mButton5.setVisibility (View.VISIBLE);
         mButton5.setOnClickListener (new View.OnClickListener () {
             @Override
             public void onClick(View view) {
-                Toast.makeText (getApplicationContext (),historyList.get (4).getMood (),Toast.LENGTH_SHORT).show ();
+                Toast.makeText (getApplicationContext (),historyList.get (4).getCOMMENT (),Toast.LENGTH_SHORT).show ();
             }
         });
 
 
         /////MOOD 6 ///////////////////
-        if (mood6 == null || mood6.getComment() == null) {
+        if (mood6 == null || mood6.getCOMMENT () == null) {
             mButton6.setVisibility (View.INVISIBLE);
         } else
             mButton6.setVisibility (View.VISIBLE);
         mButton6.setOnClickListener (new View.OnClickListener () {
             @Override
             public void onClick(View view) {
-                Toast.makeText (getApplicationContext (),historyList.get (5).getMood (),Toast.LENGTH_SHORT).show ();
+                Toast.makeText (getApplicationContext (),historyList.get (5).getCOMMENT (),Toast.LENGTH_SHORT).show ();
             }
         });
 
         //////MOOD 7////////////////
-        if (mood7 == null || mood7.getComment() == null) {
+        if (mood7 == null || mood7.getCOMMENT () == null) {
             mButton7.setVisibility (View.INVISIBLE);
         } else
             mButton7.setVisibility (View.VISIBLE);
@@ -316,40 +333,57 @@ public class HistoryActivity extends AppCompatActivity {
         mButton7.setOnClickListener (new View.OnClickListener () {
             @Override
             public void onClick(View v) {
-                Toast.makeText (getApplicationContext (),historyList.get (6).getMood (),Toast.LENGTH_SHORT).show ();
+                Toast.makeText (getApplicationContext (),historyList.get (6).getCOMMENT (),Toast.LENGTH_SHORT).show ();
             }
         });
 
-    if(mood1 != null){
-        displayMood (mood1.getDifferentsMoods (), mJour1);
+
+
+
+
+
+        ////MOOD1
+        if (mood1 == null) {
+            mButton1.setVisibility (View.INVISIBLE);
+            Toast.makeText(this, "Vous n'avez pas encore d'historique :(", Toast.LENGTH_LONG).show();
+        } else
+            mButton1.setVisibility (View.VISIBLE);
+            displayMood (mood1.getMOOD(), mJour1);
+
+        mButton1.setOnClickListener (new View.OnClickListener () {
+                                         @Override
+                                         public void onClick(View v) {
+                                             Toast.makeText (getApplicationContext (), historyList.get (6).getCOMMENT (), Toast.LENGTH_SHORT).show ();
+                                         }
+                                     });
+
+
+
+
+
+    /*if(mood1 != null){
+        displayMood (mood1.getMOOD (), mJour1);
     }if(mood2 != null){
-        displayMood (mood2.getDifferentsMoods (), mJour2);
+        displayMood (mood2.getMOOD (), mJour2);
     }if(mood3 != null){
-        displayMood (mood3.getDifferentsMoods (), mJour3);
+        displayMood (mood3.getMOOD (), mJour3);
     }if(mood4 != null){
-        displayMood (mood4.getDifferentsMoods (), mJour4);
+        displayMood (mood4.getMOOD (), mJour4);
     }if (mood5 != null){
-        displayMood (mood5.getDifferentsMoods (), mJour5);
+        displayMood (mood5.getMOOD (), mJour5);
     }if (mood6 != null){
-        displayMood (mood6.getDifferentsMoods (), mJour6);
+        displayMood (mood6.getMOOD (), mJour6);
     }if(mood7 != null){
-        displayMood (mood7.getDifferentsMoods (), mJour7);
-    }
+        displayMood (mood7.getMOOD (), mJour7);
+    }*/
 
 
 
     }
 
-    //removed one day at the date and set at 00:00
-    public static Date removeOneDay(Date d) {
-        Calendar dateStart = Calendar.getInstance ();
-        dateStart.setTime (d);
-        dateStart.add (Calendar.DAY_OF_YEAR, -1);
-        return dateStart.getTime ();
-    }
-
-    public ArrayList<Mood> sevenLastMood() {
-        ArrayList<Mood> list = new ArrayList<> ();
+    //je recupere les elements de la base de donnee
+    public ArrayList<MoodData> sevenLastMood() {
+        /*ArrayList<MoodData> list = new ArrayList<> ();
 
         Date date = new Date ();
         String sDate;
@@ -357,11 +391,12 @@ public class HistoryActivity extends AppCompatActivity {
             sDate = dateToString (date);
             String moodKey = "MOOD" + sDate; //affichage MOODddMMyyyy
             Mood mood = Storage.load (context, moodKey);
-            list.add (mood);
+            list.add (moodData);
             date = stringToDate (sDate);
             date = removeOneDay (date);
         }
-        return list;
+        return list;*/
+        return databaseManager.getLast7Mood();
     }
 
     public String dateToString(Date d) {
@@ -403,7 +438,7 @@ public class HistoryActivity extends AppCompatActivity {
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)
-    private void displayMood(DifferentsMoods differentsMoods, RelativeLayout layout) {
+    private void displayMood(int position, RelativeLayout layout) {
         Display display = getWindowManager ().getDefaultDisplay ();
         Point size = new Point ();
         int width = 0;
@@ -413,25 +448,25 @@ public class HistoryActivity extends AppCompatActivity {
         }catch (NoSuchMethodError error){
             display.getSize (size);
         }
-        switch (differentsMoods) {
-            case SAD:
+        switch (position) {
+            case 0:
                 layout.setBackgroundColor (getColor (R.color.sad_red));
 
                 break;
 
-            case DISAPPOINTED:
+            case 1:
                 layout.setBackgroundColor (getColor (R.color.disappointed_grey));
                 break;
 
-            case NORMAL:
+            case 2:
                 layout.setBackgroundColor (getColor (R.color.normal_blue));
                 break;
 
-            case HAPPY:
+            case 3:
                 layout.setBackgroundColor (getColor (R.color.happy_green));
                 break;
 
-            case SUPER_HAPPY:
+            case 4:
                 layout.setBackgroundColor (getColor (R.color.super_happy_yellow));
                 break;
         }

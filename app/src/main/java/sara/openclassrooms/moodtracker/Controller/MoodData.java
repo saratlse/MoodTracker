@@ -1,28 +1,22 @@
 package sara.openclassrooms.moodtracker.Controller;
 
+import sara.openclassrooms.moodtracker.Model.DifferentsMoods;
+
 public class MoodData {
-    private int ID_;
     private int MOOD;
     private String COMMENT;
     private String WHEN_;
+    private int differentsMoods;
 
 
     //CONSTRUCTOR
-    public MoodData (int ID_, int MOOD, String COMMENT,String WHEN_){
-        this.ID_=ID_;
+    public MoodData ( int MOOD, String COMMENT,String WHEN_){
         this.MOOD =MOOD;
         this.COMMENT = COMMENT;
         this.WHEN_ = WHEN_;
 
     }
 
-    public void setID_(int id_){
-        this.ID_ = id_;
-    }
-
-    public int getID_() {
-        return ID_;
-    }
 
     public void setMOOD(int mood){
     this.MOOD = mood;
@@ -46,10 +40,13 @@ public class MoodData {
     public String getWHEN_() {
         return WHEN_;
     }
-
-    @Override
-    public String toString(){
-        return ID_ + ":"+MOOD+":"+COMMENT+":"+WHEN_;
+    public int getDifferentsMoods(){
+        return differentsMoods;
     }
+
+    public void setDifferentsMoods(int differentsMoods){
+        this.differentsMoods = differentsMoods;
+    }
+
 
 }

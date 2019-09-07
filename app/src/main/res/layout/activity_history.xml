@@ -54,6 +54,7 @@
             tools:text="@string/jour_6" />
 
     </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/activity_history_5_jours_layout"
         android:layout_width="match_parent"
@@ -67,7 +68,7 @@
             android:layout_height="20dp"
             android:layout_alignParentRight="true"
             android:layout_margin="10dp"
-            android:background="@drawable/ic_comment_black_48px"  />
+            android:background="@drawable/ic_comment_black_48px" />
 
         <TextView
             android:id="@+id/activity_history_text_jour_5"
@@ -77,6 +78,7 @@
             tools:text="@string/jour_5" />
 
     </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/activity_history_4_jours_layout"
         android:layout_width="match_parent"
@@ -90,7 +92,7 @@
             android:layout_height="20dp"
             android:layout_alignParentRight="true"
             android:layout_margin="10dp"
-            android:background="@drawable/ic_comment_black_48px"  />
+            android:background="@drawable/ic_comment_black_48px" />
 
         <TextView
             android:id="@+id/activity_history_text_jour_4"
@@ -115,7 +117,7 @@
             android:layout_height="20dp"
             android:layout_alignParentRight="true"
             android:layout_margin="10dp"
-            android:background="@drawable/ic_comment_black_48px"  />
+            android:background="@drawable/ic_comment_black_48px" />
 
         <TextView
             android:id="@+id/activity_history_text_jour_3"
@@ -125,6 +127,7 @@
             tools:text="@string/jour_3" />
 
     </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/activity_history_2_jours_layout"
         android:layout_width="match_parent"
@@ -138,7 +141,7 @@
             android:layout_height="20dp"
             android:layout_alignParentRight="true"
             android:layout_margin="10dp"
-            android:background="@drawable/ic_comment_black_48px"  />
+            android:background="@drawable/ic_comment_black_48px" />
 
         <TextView
             android:id="@+id/activity_history_text_jour_2"
@@ -148,6 +151,7 @@
             tools:text="@string/jour_2" />
 
     </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/activity_history_1_jour_layout"
         android:layout_width="match_parent"
@@ -161,7 +165,7 @@
             android:layout_height="20dp"
             android:layout_alignParentRight="true"
             android:layout_margin="10dp"
-            android:background="@drawable/ic_comment_black_48px"  />
+            android:background="@drawable/ic_comment_black_48px" />
 
         <TextView
             android:id="@+id/activity_history_text_jour_1"
