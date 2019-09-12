@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import java.text.ParseException;
@@ -55,13 +56,13 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Mood> mDifferentMoodsArrayList;
     private VerticalViewPager viewPager;
     private PagerAdapter pagerAdapter;
-    private FloatingActionButton mBtnComment;
+    private ImageButton mBtnComment;
     private int moodBackgroundColor;
 
 
     /*save the comment variable*/
     private Calendar mCalendar;
-    private FloatingActionButton mBtnHistoric;
+    private ImageButton mBtnHistoric;
 
     private SharedPreferences mSharedPref;
     private SharedPreferences.Editor editor;
@@ -108,8 +109,8 @@ public class MainActivity extends AppCompatActivity {
         mComment = mSharedPref.getString(PREF_KEY_COMMENT, "");
 
 
-        mBtnHistoric = (FloatingActionButton) findViewById(R.id.historyButton);
-        mBtnComment = (FloatingActionButton) findViewById(R.id.commentButton);
+        mBtnHistoric = (ImageButton) findViewById(R.id.historyButton);
+        mBtnComment = (ImageButton) findViewById(R.id.commentButton);
         edResult = (EditText) findViewById(R.id.editTextComment);
 
 
@@ -283,7 +284,7 @@ public class MainActivity extends AppCompatActivity {
                         mSharedPref.edit().putInt(CURRENT_MOOD_COMMENT, R.color.sad_red);
 
 
-                        Toast.makeText(MainActivity.this, DifferentsMoods.SAD.name(), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MainActivity.this,"COMMENT C'ETAIT AUJOURD'HUI ?", Toast.LENGTH_SHORT).show();
 
                         break;
 
@@ -313,7 +314,7 @@ public class MainActivity extends AppCompatActivity {
                         mSharedPref.edit().putString(SAVED_SMILEY_STATE, "DISAPPOINTED_STATE").apply();
                         mSharedPref.edit().putInt(CURRENT_MOOD_COMMENT, R.color.disappointed_grey).apply();
 
-                        Toast.makeText(MainActivity.this, DifferentsMoods.DISAPPOINTED.name(), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MainActivity.this, DifferentsMoods.DISAPPOINTED.name(), Toast.LENGTH_SHORT).show();
                         break;
 
                     case 2:
@@ -341,7 +342,7 @@ public class MainActivity extends AppCompatActivity {
                         mSharedPref.edit().putString(SAVED_SMILEY_STATE, "NORMAL_STATE").apply();
                         mSharedPref.edit().putInt(CURRENT_MOOD_COMMENT, R.color.disappointed_grey).apply();
 
-                        Toast.makeText(MainActivity.this,DifferentsMoods.NORMAL.name(), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MainActivity.this,DifferentsMoods.NORMAL.name(), Toast.LENGTH_SHORT).show();
                         break;
 
                     case 3:
@@ -368,7 +369,7 @@ public class MainActivity extends AppCompatActivity {
                         mSharedPref.edit().putString(SAVED_SMILEY_STATE, "HAPPY_STATE").apply();
                         mSharedPref.edit().putInt(CURRENT_MOOD_COMMENT, R.color.happy_green).apply();
 
-                        Toast.makeText(MainActivity.this, DifferentsMoods.HAPPY.name(), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MainActivity.this, DifferentsMoods.HAPPY.name(), Toast.LENGTH_SHORT).show();
                         break;
 
                     case 4:
@@ -396,7 +397,7 @@ public class MainActivity extends AppCompatActivity {
                         mSharedPref.edit().putString(PREFERENCES_KEY_MOOD, "SUPER_HAPPY_STATE").apply();
                         mSharedPref.edit().putInt(PREF_BACKGROUND_COLOR, R.color.super_happy_yellow).apply();
 
-                        Toast.makeText(MainActivity.this, DifferentsMoods.SUPER_HAPPY.name(), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MainActivity.this, DifferentsMoods.SUPER_HAPPY.name(), Toast.LENGTH_SHORT).show();
                         break;
 
                     default:
@@ -465,6 +466,5 @@ public class MainActivity extends AppCompatActivity {
         }
         return list;
     }
-
 
 }

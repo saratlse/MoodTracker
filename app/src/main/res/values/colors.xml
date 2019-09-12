@@ -8,5 +8,6 @@
     <color name="normal_blue">#05c0d6</color>
     <color name="happy_green">#A1FAAB</color>
     <color name="super_happy_yellow">#F5F220</color>
+    <color name="black">#000000</color>
 
 </resources>

@@ -48,8 +48,6 @@ public class DatabaseManager extends SQLiteOpenHelper {
     //methode qui met a jour ma base de donnee changement de version
     //on met a jour ici la nouvelle base de donnee
 
-
-
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         String strSQL = "drop table T_Mood";
@@ -79,7 +77,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
     }
 
-    /*private String myCurrentDate() {
+    private String myCurrentDate() {
         String myCurrentDate = "SELECT  when_ FROM T_Mood order by _id desc limit 1" ;
         Cursor cursor = this.getReadableDatabase ().rawQuery (myCurrentDate,null);
         cursor.moveToFirst ();
@@ -91,7 +89,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         cursor.close ();
         myCurrentDate = dateIshere;
         return myCurrentDate;
-    }*/
+    }
 
 
     //creation du cursor
@@ -132,7 +130,6 @@ public class DatabaseManager extends SQLiteOpenHelper {
         if (c != null) {
             c.moveToFirst();
         }
-
         return c;
     }
 
