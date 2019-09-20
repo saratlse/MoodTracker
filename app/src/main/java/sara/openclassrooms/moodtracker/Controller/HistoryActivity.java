@@ -494,7 +494,6 @@ public class HistoryActivity extends AppCompatActivity {
                     width = display.getWidth()/5;
                     break;
 
-
             }
             LinearLayout.LayoutParams parms = (LinearLayout.LayoutParams) relativeLayout.getLayoutParams();
             parms.width = width;
