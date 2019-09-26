@@ -109,9 +109,9 @@ public class MainActivity extends AppCompatActivity {
         mComment = mSharedPref.getString(PREF_KEY_COMMENT, "");
 
 
-        mBtnHistoric = (ImageButton) findViewById(R.id.historyButton);
-        mBtnComment = (ImageButton) findViewById(R.id.commentButton);
-        edResult = (EditText) findViewById(R.id.editTextComment);
+        mBtnHistoric = findViewById(R.id.historyButton);
+        mBtnComment = findViewById(R.id.commentButton);
+        edResult = findViewById(R.id.editTextComment);
 
 
         mood = Storage.load(context, "MOOD" + dateToString(new Date()));
@@ -139,8 +139,8 @@ public class MainActivity extends AppCompatActivity {
 
                 //set dialog_box.xml to alerdialog builder
                 alertDialogBuilder.setView(dialogBoxView);
-                edResult = (EditText) findViewById(R.id.editTextComment);
-                final EditText textInput = (EditText) dialogBoxView.findViewById(R.id.editTextComment);
+                edResult = findViewById(R.id.editTextComment);
+                final EditText textInput = dialogBoxView.findViewById(R.id.editTextComment);
 
 
                 String text = mSharedPref.getString(PREF_KEY_COMMENT, null);
@@ -157,8 +157,7 @@ public class MainActivity extends AppCompatActivity {
 
                                         String userInputValue = textInput.getText().toString().trim();
                                         String mCurrentDate = simpleDateFormat.format (new Date ());
-
-                                        databaseManager.insertMood (moodValue, userInputValue,mCurrentDate);
+                                        databaseManager.insertMood(moodValue, userInputValue,mCurrentDate);
 
 
 
@@ -194,9 +193,11 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                String mCurrentDate =simpleDateFormat.format (new Date ());
-                databaseManager.insertMood (moodValue, userInputValue,mCurrentDate);
 
+
+
+                String mCurrentDate = simpleDateFormat.format (new Date ());
+                databaseManager.insertMood(moodValue, userInputValue,mCurrentDate);
 
                 //Enregistrer un commentaire
                 mSharedPref = getSharedPreferences("COMMENT" + dateToString(new Date()), MODE_PRIVATE);//affichage COMMENT26062019

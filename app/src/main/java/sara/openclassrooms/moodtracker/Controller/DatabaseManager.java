@@ -63,33 +63,25 @@ public class DatabaseManager extends SQLiteOpenHelper {
         String pattern = "dd-MM-yyyy";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 
+        //today is the date of the day, todayIsToday
+        mCurrentDate = simpleDateFormat.format(new Date());
+        String todayIsToday = todayIsToday();
 
-        mCurrentDate = simpleDateFormat.format (new Date ());
-        //String myCurrentDate = myCurrentDate();
+        boolean result;
 
+        if (result = mCurrentDate.equals(todayIsToday)) {
+            updateRow(moodValue, userInputValue, mCurrentDate);
+        } else {
+            String strSql = "insert into T_Mood (mood,comment,when_) values (" + moodValue + ",'" + userInputValue + "','" + simpleDateFormat.format(new Date()) + "')";
 
-//       userInputValue = userInputValue.replace ("'", "''");
-        String strSql = "insert into T_Mood (mood,comment,when_) values (" + moodValue + ",'" + userInputValue + "','" + simpleDateFormat.format (new Date ()) + "')";
+            //j'envoie mon ordre sql a la base this=dataBaseManager
+            this.getWritableDatabase().execSQL(strSql);
+            Log.i("DATABASE", "insertScore invoked");
 
-        //j'envoie mon ordre sql a la base this=dataBaseManager
-        this.getWritableDatabase ().execSQL (strSql);
-        Log.i ("DATABASE", "insertScore invoked");
-
-    }
-
-    private String myCurrentDate() {
-        String myCurrentDate = "SELECT  when_ FROM T_Mood order by _id desc limit 1" ;
-        Cursor cursor = this.getReadableDatabase ().rawQuery (myCurrentDate,null);
-        cursor.moveToFirst ();
-        String dateIshere = null;
-        while (!cursor.isAfterLast ()){
-            dateIshere = cursor.getString (0);
-            cursor.moveToNext ();
         }
-        cursor.close ();
-        myCurrentDate = dateIshere;
-        return myCurrentDate;
     }
+
+
 
 
     //creation du cursor
@@ -101,8 +93,8 @@ public class DatabaseManager extends SQLiteOpenHelper {
         Cursor cursor = getReadableDatabase ().query ("T_Mood",columns,"",selectArgs,"","","");
                 ArrayList<MoodData> moodDataArrayList = new ArrayList<> ();
         while (cursor.moveToNext ())   {
-            MoodData moodData = new MoodData (cursor.getInt (cursor.getColumnIndex ("mood")),cursor.getString (cursor.getColumnIndex ("comment")),cursor.getString (cursor.getColumnIndex ("when_")));
-
+            //MoodData moodData = new MoodData (cursor.getInt (cursor.getColumnIndex ("mood")),cursor.getString (cursor.getColumnIndex ("comment")),cursor.getString (cursor.getColumnIndex ("when_")));
+            MoodData moodData = new MoodData(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3));
             String COMMENT = cursor.getString (cursor.getColumnIndex ("comment"));
             String WHEN_ = cursor.getString (cursor.getColumnIndex ("when_"));
             int MOOD = cursor.getInt (cursor.getColumnIndex ("mood"));
@@ -110,16 +102,35 @@ public class DatabaseManager extends SQLiteOpenHelper {
             moodData.setCOMMENT (COMMENT);
             moodData.setWHEN_ (WHEN_);
             moodDataArrayList.add (moodData);
+            cursor.moveToNext();
         }
-            return moodDataArrayList;
+        cursor.close();
+
+        return moodDataArrayList;
     }
 
-    public boolean updateRow(int moodValue, String userInputValue, String mCurrentDate) {
+    public String todayIsToday() {
+        String todayIsToday = "SELECT  when_ FROM T_Mood order by _id desc limit 1" ;
+
+        Cursor cursor = this.getReadableDatabase ().rawQuery (todayIsToday,null);
+        cursor.moveToFirst ();
+        String dateAlreadyExist = null;
+
+        while (!cursor.isAfterLast ()){
+            dateAlreadyExist = cursor.getString (0);
+            cursor.moveToNext ();
+        }
+        cursor.close ();
+        todayIsToday = dateAlreadyExist;
+        return todayIsToday;
+    }
+
+    public boolean updateRow(int moodValue, String userInputValue, String today) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("mood", moodValue );
         contentValues.put("comment", userInputValue);
-        db.update("T_mood", contentValues, "when_ = '" + mCurrentDate + "'", null);
+        db.update("T_mood", contentValues, "when_ = '" + today + "'", null);
 
         return true;
     }

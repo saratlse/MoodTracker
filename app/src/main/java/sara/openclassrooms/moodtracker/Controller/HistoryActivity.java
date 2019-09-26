@@ -43,13 +43,13 @@ public class HistoryActivity extends AppCompatActivity {
     TextView mHistoryTextView;
 
 
-    ArrayList<RelativeLayout> listLayout = new ArrayList<> ();
-    ArrayList<Button> listButton = new ArrayList<> ();
+    ArrayList<RelativeLayout> listLayout = new ArrayList<>();
+    ArrayList<Button> listButton = new ArrayList<>();
     ArrayList<TextView> listTextView = new ArrayList<>();
     ArrayList<MoodData> historyList = new ArrayList<>();
     ArrayList<ImageView> imageList = new ArrayList<>();
     String mCurrentDate = "dd-MM-yyyy";
-    SimpleDateFormat Sdf = new SimpleDateFormat (mCurrentDate);
+    SimpleDateFormat Sdf = new SimpleDateFormat();
 
 
     private int width;
@@ -74,165 +74,158 @@ public class HistoryActivity extends AppCompatActivity {
 
     //removed one day at the date and set at 00:00
     public static Date removeOneDay(Date d) {
-        Calendar dateStart = Calendar.getInstance ();
-        dateStart.setTime (d);
-        dateStart.add (Calendar.DAY_OF_YEAR, -1);
-        return dateStart.getTime ();
+        Calendar dateStart = Calendar.getInstance();
+        dateStart.setTime(d);
+        dateStart.add(Calendar.DAY_OF_YEAR, -1);
+        return dateStart.getTime();
     }
 
     @TargetApi(Build.VERSION_CODES.M)
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate (savedInstanceState);
-        setContentView (R.layout.activity_history);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_history);
 
-        databaseManager = new DatabaseManager (this);
-        historyList = databaseManager.getLast7Mood ();
-
-
-
-        mSharedPref = getSharedPreferences ("PREF_KEY_COMMENT", MODE_PRIVATE);
-        mComment = mSharedPref.getString ("REF_KEY_COMMENT", "");
+        databaseManager = new DatabaseManager(this);
+        historyList = databaseManager.getLast7Mood();
 
 
-        ArrayList<RelativeLayout> listLayout = new ArrayList<> ();
-        ArrayList<Button> listButton = new ArrayList<> ();
-        ArrayList<TextView> listTextView = new ArrayList<> ();
-        ArrayList<ImageView> imageList = new ArrayList<> ();
+        mSharedPref = getSharedPreferences("PREF_KEY_COMMENT", MODE_PRIVATE);
+        mComment = mSharedPref.getString("REF_KEY_COMMENT", "");
 
 
-        RelativeLayout mJour1 = this.findViewById (R.id.activity_history_1_jour_layout);
-        RelativeLayout mJour2 = this.findViewById (R.id.activity_history_2_jours_layout);
-        RelativeLayout mJour3 = this.findViewById (R.id.activity_history_3_jours_layout);
-        RelativeLayout mJour4 = this.findViewById (R.id.activity_history_4_jours_layout);
-        RelativeLayout mJour5 = this.findViewById (R.id.activity_history_5_jours_layout);
-        RelativeLayout mJour6 = this.findViewById (R.id.activity_history_6_jours_layout);
-        RelativeLayout mJour7 = this.findViewById (R.id.activity_history_7_jours_layout);
+        ArrayList<RelativeLayout> listLayout = new ArrayList<>();
+        ArrayList<Button> listButton = new ArrayList<>();
+        ArrayList<TextView> listTextView = new ArrayList<>();
+        ArrayList<ImageView> imageList = new ArrayList<>();
 
 
-        Button mButton1 = findViewById (R.id.activity_history_1_jour_btn);
-        Button mButton2 = findViewById (R.id.activity_history_2_jours_btn);
-        Button mButton3 = findViewById (R.id.activity_history_3_jours_btn);
-        Button mButton4 = findViewById (R.id.activity_history_4_jours_btn);
-        Button mButton5 = findViewById (R.id.activity_history_5_jours_btn);
-        Button mButton6 = findViewById (R.id.activity_history_6_jours_btn);
-        Button mButton7 = findViewById (R.id.activity_history_7_jours_btn);
+        RelativeLayout mJour1 = this.findViewById(R.id.activity_history_1_jour_layout);
+        RelativeLayout mJour2 = this.findViewById(R.id.activity_history_2_jours_layout);
+        RelativeLayout mJour3 = this.findViewById(R.id.activity_history_3_jours_layout);
+        RelativeLayout mJour4 = this.findViewById(R.id.activity_history_4_jours_layout);
+        RelativeLayout mJour5 = this.findViewById(R.id.activity_history_5_jours_layout);
+        RelativeLayout mJour6 = this.findViewById(R.id.activity_history_6_jours_layout);
+        RelativeLayout mJour7 = this.findViewById(R.id.activity_history_7_jours_layout);
+
+
+        Button mButton1 = findViewById(R.id.activity_history_1_jour_btn);
+        Button mButton2 = findViewById(R.id.activity_history_2_jours_btn);
+        Button mButton3 = findViewById(R.id.activity_history_3_jours_btn);
+        Button mButton4 = findViewById(R.id.activity_history_4_jours_btn);
+        Button mButton5 = findViewById(R.id.activity_history_5_jours_btn);
+        Button mButton6 = findViewById(R.id.activity_history_6_jours_btn);
+        Button mButton7 = findViewById(R.id.activity_history_7_jours_btn);
 
 
         ///////////////////TEXTVIEW//////////////////////////////////////////
-        TextView mTextView1 = findViewById (R.id.activity_history_text_jour_1);
-        TextView mTextView2 = findViewById (R.id.activity_history_text_jour_2);
-        TextView mTextView3 = findViewById (R.id.activity_history_text_jour_3);
-        TextView mTextView4 = findViewById (R.id.activity_history_text_jour_4);
-        TextView mTextView5 = findViewById (R.id.activity_history_text_jour_5);
-        TextView mTextView6 = findViewById (R.id.activity_history_text_jour_6);
-        TextView mTextView7 = findViewById (R.id.activity_history_text_jour_7);
+        TextView mTextView1 = findViewById(R.id.activity_history_text_jour_1);
+        TextView mTextView2 = findViewById(R.id.activity_history_text_jour_2);
+        TextView mTextView3 = findViewById(R.id.activity_history_text_jour_3);
+        TextView mTextView4 = findViewById(R.id.activity_history_text_jour_4);
+        TextView mTextView5 = findViewById(R.id.activity_history_text_jour_5);
+        TextView mTextView6 = findViewById(R.id.activity_history_text_jour_6);
+        TextView mTextView7 = findViewById(R.id.activity_history_text_jour_7);
 
 
-        mTextView1.setText (getString (R.string.jour_1));
-        mTextView2.setText (getString (R.string.jour_2));
-        mTextView3.setText (getString (R.string.jour_3));
-        mTextView4.setText (getString (R.string.jour_4));
-        mTextView5.setText (getString (R.string.jour_5));
-        mTextView6.setText (getString (R.string.jour_6));
-        mTextView7.setText (getString (R.string.jour_7));
+        mTextView1.setText(getString(R.string.jour_1));
+        mTextView2.setText(getString(R.string.jour_2));
+        mTextView3.setText(getString(R.string.jour_3));
+        mTextView4.setText(getString(R.string.jour_4));
+        mTextView5.setText(getString(R.string.jour_5));
+        mTextView6.setText(getString(R.string.jour_6));
+        mTextView7.setText(getString(R.string.jour_7));
 
 
-        sdf = new SimpleDateFormat ("ddMMyyyy");//transforme la date en string
-        mCalendar = Calendar.getInstance ();
+        sdf = new SimpleDateFormat("ddMMyyyy");//transforme la date en string
+        mCalendar = Calendar.getInstance();
 
 
         ///DAY 7
-        listLayout.add (mJour7);
-        listButton.add (mButton7);
-        listTextView.add (mTextView7);
-        mCalendar.add (Calendar.DATE, -1); //modifie un element de la date
-        String mSevenDaysP = sdf.format (mCalendar.getTime ());
-        Log.i ("my activity ", mSevenDaysP);
-        mSevenDaysAgo = Storage.load (this, mSevenDaysP);
+        listLayout.add(mJour7);
+        listButton.add(mButton7);
+        listTextView.add(mTextView7);
+        mCalendar.add(Calendar.DATE, -1); //modifie un element de la date
+        String mSevenDaysP = sdf.format(mCalendar.getTime());
+        Log.i("my activity ", mSevenDaysP);
+        mSevenDaysAgo = Storage.load(this, mSevenDaysP);
 
 
         //DAY 6
-        listLayout.add (mJour6);
-        listButton.add (mButton6);
-        listTextView.add (mTextView6);
-        mCalendar.add (Calendar.DATE, -1);
-        String mSixDaysP = sdf.format (mCalendar.getTime ());
-        mSixDaysAgo = Storage.load (this, mSixDaysP);
+        listLayout.add(mJour6);
+        listButton.add(mButton6);
+        listTextView.add(mTextView6);
+        mCalendar.add(Calendar.DATE, -1);
+        String mSixDaysP = sdf.format(mCalendar.getTime());
+        mSixDaysAgo = Storage.load(this, mSixDaysP);
 
         //DAY 5
-        listLayout.add (mJour5);
-        listButton.add (mButton5);
-        listTextView.add (mTextView5);
-        mCalendar.add (Calendar.DATE, -1);
-        String mFiveDaysP = sdf.format (mCalendar.getTime ());
-        mFiveDaysAgo = Storage.load (this, mFiveDaysP);
+        listLayout.add(mJour5);
+        listButton.add(mButton5);
+        listTextView.add(mTextView5);
+        mCalendar.add(Calendar.DATE, -1);
+        String mFiveDaysP = sdf.format(mCalendar.getTime());
+        mFiveDaysAgo = Storage.load(this, mFiveDaysP);
 
         //DAY 4
-        listLayout.add (mJour4);
-        listButton.add (mButton4);
-        listTextView.add (mTextView4);
-        mCalendar.add (Calendar.DATE, -1);
-        String mFourDaysP = sdf.format (mCalendar.getTime ());
-        mFourDaysAgo = Storage.load (this, mFourDaysP);
+        listLayout.add(mJour4);
+        listButton.add(mButton4);
+        listTextView.add(mTextView4);
+        mCalendar.add(Calendar.DATE, -1);
+        String mFourDaysP = sdf.format(mCalendar.getTime());
+        mFourDaysAgo = Storage.load(this, mFourDaysP);
 
         //DAY 3
-        listLayout.add (mJour3);
-        listButton.add (mButton3);
-        listTextView.add (mTextView3);
-        mCalendar.add (Calendar.DATE, -1);
-        String mThreeDaysP = sdf.format (mCalendar.getTime ());
-        mThreeDaysAgo = Storage.load (this, mThreeDaysP);
+        listLayout.add(mJour3);
+        listButton.add(mButton3);
+        listTextView.add(mTextView3);
+        mCalendar.add(Calendar.DATE, -1);
+        String mThreeDaysP = sdf.format(mCalendar.getTime());
+        mThreeDaysAgo = Storage.load(this, mThreeDaysP);
 
         //DAY 2
-        listLayout.add (mJour2);
-        listButton.add (mButton2);
-        listTextView.add (mTextView2);
-        mCalendar.add (Calendar.DATE, -1);
-        final String mTwoDaysP = sdf.format (mCalendar.getTime ());
-        mTwoDaysAgo = Storage.load (this, mTwoDaysP);
+        listLayout.add(mJour2);
+        listButton.add(mButton2);
+        listTextView.add(mTextView2);
+        mCalendar.add(Calendar.DATE, -1);
+        final String mTwoDaysP = sdf.format(mCalendar.getTime());
+        mTwoDaysAgo = Storage.load(this, mTwoDaysP);
 
 
         //YESTERDAY
-        listLayout.add (mJour1);
-        listButton.add (mButton1);
-        listTextView.add (mTextView1);
-        mCalendar.add (Calendar.DATE, -1);
-        final String mOneDayP = sdf.format (mCalendar.getTime ());
-        mYesterday = Storage.load (this, mOneDayP);
+        listLayout.add(mJour1);
+        listButton.add(mButton1);
+        listTextView.add(mTextView1);
+        mCalendar.add(Calendar.DATE, -1);
+        final String mOneDayP = sdf.format(mCalendar.getTime());
+        mYesterday = Storage.load(this, mOneDayP);
 
 
-        mActivityYesterdayColor = getIntent ().getIntExtra ("YESTERDAY_COLOR", 0);
-        mActivityYesterdayComment = getIntent ().getStringExtra ("YESTERDAY_COMMENT");
+        mActivityYesterdayColor = getIntent().getIntExtra("YESTERDAY_COLOR", 0);
+        mActivityYesterdayComment = getIntent().getStringExtra("YESTERDAY_COMMENT");
 
-        mActivity2DaysAgoColor = getIntent ().getIntExtra ("TWO_DAYS_AGO_COLOR", 0);
-        mActivity2DaysAgoComment = getIntent ().getStringExtra ("TWO_DAYS_AGO_COMMENT");
+        mActivity2DaysAgoColor = getIntent().getIntExtra("TWO_DAYS_AGO_COLOR", 0);
+        mActivity2DaysAgoComment = getIntent().getStringExtra("TWO_DAYS_AGO_COMMENT");
 
-        mActivity3DaysAgoColor = getIntent ().getIntExtra ("THREE_DAYS_AGO_COLOR", 0);
-        mActivity3DaysAgoComment = getIntent ().getStringExtra ("THREE_DAYS_AGO_COMMENT");
+        mActivity3DaysAgoColor = getIntent().getIntExtra("THREE_DAYS_AGO_COLOR", 0);
+        mActivity3DaysAgoComment = getIntent().getStringExtra("THREE_DAYS_AGO_COMMENT");
 
-        mActivity4DaysAgoColor = getIntent ().getIntExtra ("FOUR_DAYS_AGO_COLOR", 0);
-        mActivity4DaysAgoComment = getIntent ().getStringExtra ("FOUR_DAYS_AGO_COMMENT");
+        mActivity4DaysAgoColor = getIntent().getIntExtra("FOUR_DAYS_AGO_COLOR", 0);
+        mActivity4DaysAgoComment = getIntent().getStringExtra("FOUR_DAYS_AGO_COMMENT");
 
-        mActivity5DaysAgoColor = getIntent ().getIntExtra ("FIVE_DAYS_AGO_COLOR", 0);
-        mActivity5DaysAgoComment = getIntent ().getStringExtra ("FIVE_DAYS_AGO_COMMENT");
+        mActivity5DaysAgoColor = getIntent().getIntExtra("FIVE_DAYS_AGO_COLOR", 0);
+        mActivity5DaysAgoComment = getIntent().getStringExtra("FIVE_DAYS_AGO_COMMENT");
 
-        mActivity6DaysAgoColor = getIntent ().getIntExtra ("SIX_DAYS_AGO_COLOR", 0);
-        mActivity6DaysAgoComment = getIntent ().getStringExtra ("SIX_DAYS_AGO_COMMENT");
+        mActivity6DaysAgoColor = getIntent().getIntExtra("SIX_DAYS_AGO_COLOR", 0);
+        mActivity6DaysAgoComment = getIntent().getStringExtra("SIX_DAYS_AGO_COMMENT");
 
-        mActivity7DaysAgoColor = getIntent ().getIntExtra ("SEVEN_DAYS_AGO_COLOR", 0);
-        mActivity7DaysAgoComment = getIntent ().getStringExtra ("SEVEN_DAYS_AGO_COMMENT");
-
-
-        Storage.load (context, "MOOD");///creer un load pour recuperer la clef
+        mActivity7DaysAgoColor = getIntent().getIntExtra("SEVEN_DAYS_AGO_COLOR", 0);
+        mActivity7DaysAgoComment = getIntent().getStringExtra("SEVEN_DAYS_AGO_COMMENT");
 
 
+        Storage.load(context, "MOOD");///creer un load pour recuperer la clef
 
-
-
-        //on doit recuperer le mood de la base de donnee qui est un int
-        historyList = sevenLastMood ();
         MoodData mood1 = null;
         MoodData mood2 = null;
         MoodData mood3 = null;
@@ -241,192 +234,202 @@ public class HistoryActivity extends AppCompatActivity {
         MoodData mood6 = null;
         MoodData mood7 = null;
 
-        for (int i = 0; i<historyList.size();i++){
-            if (i == 0) {
-                mood1 = historyList.get(0);
-            }
-            if(i==1){
-                mood1 = historyList.get(0);
-                mood2 = historyList.get(1);
-            }
-            if(i==2){
-                mood1 = historyList.get(0);
-                mood2 = historyList.get(1);
-                mood3 = historyList.get(2);
-            }
-            if(i==3){
-                mood1 = historyList.get(0);
-                mood2 = historyList.get(1);
-                mood3 = historyList.get(2);
-                mood4 = historyList.get(3);
-            }
-            if(i==4){
-                mood1 = historyList.get(0);
-                mood2 = historyList.get(1);
-                mood3 = historyList.get(2);
-                mood4 = historyList.get(3);
-                mood5 = historyList.get(4);
-            }
-            if(i==5){
-                mood1 = historyList.get(0);
-                mood2 = historyList.get(1);
-                mood3 = historyList.get(2);
-                mood4 = historyList.get(3);
-                mood5 = historyList.get(4);
-                mood6 = historyList.get(5);
-            }
-            if(i==6){
-                mood1 = historyList.get(0);
-                mood2 = historyList.get(1);
-                mood3 = historyList.get(2);
-                mood4 = historyList.get(3);
-                mood5 = historyList.get(4);
-                mood6 = historyList.get(5);
-                mood7 = historyList.get(6);
-            }
+        if (historyList.size() == 1) {
+            mood1 = historyList.get(0);
+        }
+        if (historyList.size() == 2) {
+            mood1 = historyList.get(0);
+            mood2 = historyList.get(1);
+        }
+        if (historyList.size() == 3) {
+            mood1 = historyList.get(0);
+            mood2 = historyList.get(1);
+            mood3 = historyList.get(2);
+        }
+        if (historyList.size() == 4) {
+            mood1 = historyList.get(0);
+            mood2 = historyList.get(1);
+            mood3 = historyList.get(2);
+            mood4 = historyList.get(3);
+        }
+        if (historyList.size() == 5) {
+            mood1 = historyList.get(0);
+            mood2 = historyList.get(1);
+            mood3 = historyList.get(2);
+            mood4 = historyList.get(3);
+            mood5 = historyList.get(4);
+        }
+        if (historyList.size() == 6) {
+            mood1 = historyList.get(0);
+            mood2 = historyList.get(1);
+            mood3 = historyList.get(2);
+            mood4 = historyList.get(3);
+            mood5 = historyList.get(4);
+            mood6 = historyList.get(5);
+        }
+        if (historyList.size() == 7) {
+            mood1 = historyList.get(0);
+            mood2 = historyList.get(1);
+            mood3 = historyList.get(2);
+            mood4 = historyList.get(3);
+            mood5 = historyList.get(4);
+            mood6 = historyList.get(5);
+            mood7 = historyList.get(6);
+        }
 
+        ////MOOD1
+        if (mood1 == null) {
+            mButton1.setVisibility(View.INVISIBLE);
+        } else {
+            if (mood1.getCOMMENT().isEmpty()) {
+                mButton1.setVisibility(View.INVISIBLE);
+            } else {
+                mButton1.setVisibility(View.VISIBLE);
+            }
+            displayMood(mood1.getMOOD(), mJour1, mCurrentDate);
+            mButton1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //Toast.makeText (getApplicationContext (), historyList.get (0).getCOMMENT()+":"+mYesterday.getMood (),Toast.LENGTH_SHORT).show ();
+                    Toast.makeText(getApplicationContext(), historyList.get(0).getCOMMENT(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
 
+        /////MOOD 2/////
+        if (mood2 == null) {
+            mButton2.setVisibility(View.INVISIBLE);
+            //Toast.makeText(this, "Vous n'avez pas d'historique :(", Toast.LENGTH_SHORT).show();
+        } else {
+            if (mood2.getCOMMENT().isEmpty()) {
+                mButton2.setVisibility(View.INVISIBLE);
+            } else {
+                mButton2.setVisibility(View.VISIBLE);
+            }
+            displayMood(mood2.getMOOD(), mJour2, mCurrentDate);
+            mButton2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getApplicationContext(), historyList.get(1).getCOMMENT(), Toast.LENGTH_SHORT).show();
+
+                }
+            });
+        }
+
+        //////MOOD 3///////|
+        if (mood3 == null) {
+            mButton3.setVisibility(View.INVISIBLE);
+            //Toast.makeText (this, "Vous n'avez pas  d'historique :(",Toast.LENGTH_SHORT).show ();
+        } else {
+            if (mood3.getCOMMENT().isEmpty()) {
+                mButton6.setVisibility(View.INVISIBLE);
+            } else {
+                mButton3.setVisibility(View.VISIBLE);
+            }
+            displayMood(mood3.getMOOD(), mJour3, mCurrentDate);
+            mButton3.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(getApplicationContext(), historyList.get(2).getCOMMENT(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
+        //////MOOD 4//////////
+        if (mood4 == null) {
+            mButton4.setVisibility(View.INVISIBLE);
+            //Toast.makeText (this, "Vous n'avez pas d'historique :(",Toast.LENGTH_SHORT).show ();
+        } else {
+            if (mood4.getCOMMENT().isEmpty()) {
+                mButton4.setVisibility(View.INVISIBLE);
+            } else {
+                mButton4.setVisibility(View.VISIBLE);
+            }
+            displayMood(mood4.getMOOD(), mJour4, mCurrentDate);
+            mButton4.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(getApplicationContext(), historyList.get(3).getCOMMENT(), Toast.LENGTH_SHORT).show();
+                }
+            });
         }
 
 
-
-        ////MOOD1
-
-        if (historyList.get(0).getCOMMENT()==null) {
-            mButton1.setVisibility (View.INVISIBLE);
-
-            //Toast.makeText(this, "Vous n'avez pas encore d'historique :(", Toast.LENGTH_LONG).show();
-        } else
-            mButton1.setVisibility (View.VISIBLE);
-        displayMood (mood1.getMOOD (), mJour1, mCurrentDate);
-
-        mButton1.setOnClickListener (new View.OnClickListener () {
-            @Override
-            public void onClick(View v) {
-                //Toast.makeText (getApplicationContext (), historyList.get (0).getCOMMENT()+":"+mYesterday.getMood (),Toast.LENGTH_SHORT).show ();
-                Toast.makeText (getApplicationContext (), historyList.get(0).getCOMMENT (),Toast.LENGTH_SHORT).show ();
-
-            }
-        });
-
-
-        /////MOOD 2/////
-        if (historyList.get(1).getCOMMENT()==null) {
-            mButton2.setVisibility (View.INVISIBLE);
-            //Toast.makeText(this, "Vous n'avez pas d'historique :(", Toast.LENGTH_SHORT).show();
-        } else
-            mButton2.setVisibility (View.VISIBLE);
-        displayMood (mood2.getMOOD (), mJour2, mCurrentDate);
-
-        mButton2.setOnClickListener (new View.OnClickListener () {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText (getApplicationContext (), historyList.get (1).getCOMMENT (), Toast.LENGTH_SHORT).show ();
-
-            }
-        });
-
-        //////MOOD 3///////|
-        if (historyList.get(2).getCOMMENT()==null)  {
-            mButton3.setVisibility (View.INVISIBLE);
-            //Toast.makeText (this, "Vous n'avez pas  d'historique :(",Toast.LENGTH_SHORT).show ();
-        } else
-            mButton3.setVisibility (View.VISIBLE);
-        displayMood (mood3.getMOOD (), mJour3, mCurrentDate);
-        mButton3.setOnClickListener (new View.OnClickListener () {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText (getApplicationContext (), historyList.get (2).getCOMMENT (), Toast.LENGTH_SHORT).show ();
-
-            }
-        });
-
-        //////MOOD 4//////////
-        if (historyList.get(3).getCOMMENT()==null) {
-            mButton4.setVisibility (View.INVISIBLE);
-            //Toast.makeText (this, "Vous n'avez pas d'historique :(",Toast.LENGTH_SHORT).show ();
-        } else
-            mButton4.setVisibility (View.VISIBLE);
-        displayMood (mood4.getMOOD (), mJour4, mCurrentDate);
-        mButton4.setOnClickListener (new View.OnClickListener () {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText (getApplicationContext (), historyList.get (3).getCOMMENT (), Toast.LENGTH_SHORT).show ();
-            }
-        });
-
-
         ///MOOD 5//////////////////
-        if (historyList.get(4).getCOMMENT()==null) {
-            mButton5.setVisibility (View.INVISIBLE);
+        if (mood5 == null) {
+            mButton5.setVisibility(View.INVISIBLE);
             //Toast.makeText (this, "Vous n'avez pas d'historique :(", Toast.LENGTH_SHORT).show ();
-        } else
-            mButton5.setVisibility (View.VISIBLE);
-        displayMood (mood5.getMOOD (), mJour5, mCurrentDate);
-        mButton5.setOnClickListener (new View.OnClickListener () {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText (getApplicationContext (), historyList.get (4).getCOMMENT (), Toast.LENGTH_SHORT).show ();
+        } else {
+            if (mood5.getCOMMENT().isEmpty()) {
+                mButton6.setVisibility(View.INVISIBLE);
+            } else {
+                mButton5.setVisibility(View.VISIBLE);
             }
-        });
+            displayMood(mood5.getMOOD(), mJour5, mCurrentDate);
+            mButton5.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(getApplicationContext(), historyList.get(4).getCOMMENT(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
 
 
         /////MOOD 6 ///////////////////
-        if (historyList.get(5).getCOMMENT()==null) {
-            mButton6.setVisibility (View.INVISIBLE);
+        if (mood6 == null) {
+            mButton6.setVisibility(View.INVISIBLE);
             //Toast.makeText (this, "Vous n'avez pas d'historique :(", Toast.LENGTH_SHORT).show ();
-        } else
-            mButton6.setVisibility (View.VISIBLE);
-        displayMood (mood6.getMOOD (), mJour6, mCurrentDate);
-        mButton6.setOnClickListener (new View.OnClickListener () {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText (getApplicationContext (), historyList.get (5).getCOMMENT (), Toast.LENGTH_SHORT).show ();
+        } else {
+            if (mood6.getCOMMENT().isEmpty()) {
+                mButton6.setVisibility(View.INVISIBLE);
+            } else {
+                mButton6.setVisibility(View.VISIBLE);
             }
-        });
+            displayMood(mood6.getMOOD(), mJour6, mCurrentDate);
+            mButton6.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(getApplicationContext(), historyList.get(5).getCOMMENT(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
 
         //////MOOD 7////////////////
-        if (historyList.get(6).getCOMMENT()==null) {
-            mButton7.setVisibility (View.INVISIBLE);
+        if (mood7 == null) {
+            mButton7.setVisibility(View.INVISIBLE);
             //Toast.makeText (this, "Vous n'avez pas  d'historique :(", Toast.LENGTH_SHORT).show ();
-        } else
-            mButton7.setVisibility (View.VISIBLE);
-        displayMood (mood7.getMOOD (), mJour7, mCurrentDate);
-        mButton7.setOnClickListener (new View.OnClickListener () {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText (getApplicationContext (), historyList.get (6).getCOMMENT (), Toast.LENGTH_SHORT).show ();
+        } else {
+            if (mood7.getCOMMENT().isEmpty()) {
+                mButton7.setVisibility(View.INVISIBLE);
+            } else {
+                mButton7.setVisibility(View.VISIBLE);
             }
-        });
-
+            displayMood(mood7.getMOOD(), mJour7, mCurrentDate);
+            mButton7.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getApplicationContext(), historyList.get(6).getCOMMENT(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
-
-    //je recupere les elements de la base de donnee
-    public ArrayList<MoodData> sevenLastMood() {
-
-        return databaseManager.getLast7Mood ();
-
-
-    }
-
-
-
 
 
     public String dateToString(Date d) {
         //@SuppressLint("SimpleDateFormat")
-        SimpleDateFormat f = new SimpleDateFormat ("yyyyMMdd");
-        return f.format (d);
+        SimpleDateFormat f = new SimpleDateFormat("yyyyMMdd");
+        return f.format(d);
     }
+
 
     //CONVERT STRING IN DATE
     public Date stringToDate(String date) {
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat ("yyyyMMdd");
-        Date d = new Date ();
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        Date d = new Date();
         try {
-            d = sdf.parse (date);
+            d = sdf.parse(date);
         } catch (ParseException e) {
-            e.printStackTrace ();
+            e.printStackTrace();
         }
         return d;
     }
@@ -434,16 +437,16 @@ public class HistoryActivity extends AppCompatActivity {
     //recovers seven last comment in arrayList
     public ArrayList<String> sevenLastComment() {
         String comment;
-        ArrayList<String> list = new ArrayList<> ();
+        ArrayList<String> list = new ArrayList<>();
 
-        Date d = new Date ();
+        Date d = new Date();
         String s;
-        while (list.size () < 8) {
-            s = dateToString (d);
-            comment = getPreferences (MODE_PRIVATE).getString ("COMMENT" + s, null);
-            list.add (comment);
-            d = stringToDate (s);
-            d = removeOneDay (d);
+        while (list.size() < 8) {
+            s = dateToString(d);
+            comment = getPreferences(MODE_PRIVATE).getString("COMMENT" + s, null);
+            list.add(comment);
+            d = stringToDate(s);
+            d = removeOneDay(d);
         }
         return list;
     }
@@ -452,9 +455,7 @@ public class HistoryActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void displayMood(int position, RelativeLayout relativeLayout, String date) {
 
-
         ViewGroup.LayoutParams params = relativeLayout.getLayoutParams();
-
 
         Display display = getWindowManager().getDefaultDisplay();
         DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -462,36 +463,35 @@ public class HistoryActivity extends AppCompatActivity {
         int height = displayMetrics.heightPixels;
         int width = displayMetrics.widthPixels;
 
-        if (sevenLastMood()== null) {
+        if (databaseManager.getLast7Mood()== null) {
             relativeLayout.setBackgroundColor(0);
-            relativeLayout.setVisibility(View.INVISIBLE);
+            //relativeLayout.setVisibility(View.INVISIBLE);
 
         } else {
-
             switch (position) {
                 case 0:
-                    width = (display.getWidth() );
-                    relativeLayout.setBackgroundColor (getColor (R.color.sad_red));
+                    width = (display.getWidth());
+                    relativeLayout.setBackgroundColor(getColor(R.color.sad_red));
                     break;
 
                 case 1:
-                    relativeLayout.setBackgroundColor (getColor (R.color.disappointed_grey));
-                    width = (display.getWidth()*2)/5;
+                    relativeLayout.setBackgroundColor(getColor(R.color.disappointed_grey));
+                    width = (display.getWidth() * 2) / 5;
                     break;
 
                 case 2:
-                    relativeLayout.setBackgroundColor (getColor (R.color.normal_blue));
-                    width = (display.getWidth()*3)/5;
+                    relativeLayout.setBackgroundColor(getColor(R.color.normal_blue));
+                    width = (display.getWidth() * 3) / 5;
                     break;
 
                 case 3:
-                    relativeLayout.setBackgroundColor (getColor (R.color.happy_green));
-                    width = (display.getWidth()*4)/5;
+                    relativeLayout.setBackgroundColor(getColor(R.color.happy_green));
+                    width = (display.getWidth() * 4) / 5;
                     break;
 
                 case 4:
-                    relativeLayout.setBackgroundColor (getColor (R.color.super_happy_yellow));
-                    width = display.getWidth()/5;
+                    relativeLayout.setBackgroundColor(getColor(R.color.super_happy_yellow));
+                    width = display.getWidth() / 5;
                     break;
 
             }
@@ -500,11 +500,12 @@ public class HistoryActivity extends AppCompatActivity {
 
         }
 
-
-
     }
-
 }
+
+
+
+
 
 
 
