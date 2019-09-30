@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -17,7 +16,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -159,8 +157,6 @@ public class MainActivity extends AppCompatActivity {
                                         String mCurrentDate = simpleDateFormat.format (new Date ());
                                         databaseManager.insertMood(moodValue, userInputValue,mCurrentDate);
 
-
-
                                         mComment = textInput.getText().toString();
                                         mSharedPref = getSharedPreferences("COMMENT", MODE_PRIVATE);
                                         mSharedPref.edit().putString(PREF_KEY_COMMENT, mComment).apply();
@@ -192,12 +188,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
-
-
-
-                String mCurrentDate = simpleDateFormat.format (new Date ());
-                databaseManager.insertMood(moodValue, userInputValue,mCurrentDate);
+                //String mCurrentDate = simpleDateFormat.format (new Date ());
+                //databaseManager.insertMood(moodValue, userInputValue,mCurrentDate);
 
                 //Enregistrer un commentaire
                 mSharedPref = getSharedPreferences("COMMENT" + dateToString(new Date()), MODE_PRIVATE);//affichage COMMENT26062019
