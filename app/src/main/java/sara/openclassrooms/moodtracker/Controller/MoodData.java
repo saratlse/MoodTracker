@@ -6,6 +6,7 @@ public class MoodData {
     private String COMMENT;
     private String WHEN_;
     private int differentsMoods;
+    //private int _id;
 
 
     //CONSTRUCTOR
@@ -13,12 +14,16 @@ public class MoodData {
         this.MOOD =MOOD;
         this.COMMENT = COMMENT;
         this.WHEN_ = WHEN_;
-
-
-
+        //this._id = _id;
     }
 
+    /*public int get_id() {
+        return _id;
+    }
 
+    public void set_id(int _id) {
+        this._id = _id;*
+    }*/
 
     public void setMOOD(int mood){
     this.MOOD = mood;

@@ -116,8 +116,6 @@ public class MainActivity extends AppCompatActivity {
 
         //je recupere le context de mon activity
         databaseManager = new DatabaseManager (getBaseContext ());
-        //String userInputValue = textInput.getText ().toString ();
-//        databaseManager.insertMood (moodValue,userInputValue,mCurrentDate );
 
 
         /////////////////////////////////

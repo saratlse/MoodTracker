@@ -24,7 +24,10 @@ public class DatabaseManager extends SQLiteOpenHelper {
     public static final String MOOD = "mood";
     private int IdMoodExist ;
 
-    public DatabaseManager(Context context) {//constructeur context en parametre c'est la classe de base
+
+
+    //constructeur context en parametre c'est la classe de base
+    public DatabaseManager(Context context) {
         super(context, DATA_BASE_NAME, null, DATABASE_VERSION);//4 parametres
     }
 
@@ -47,7 +50,6 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
     //methode qui met a jour ma base de donnee changement de version
     //on met a jour ici la nouvelle base de donnee
-
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         String strSQL = "drop table T_Mood";
@@ -58,7 +60,6 @@ public class DatabaseManager extends SQLiteOpenHelper {
     }
 
     public void insertMood(int moodValue, String userInputValue, String mCurrentDate) {
-
         //passer la date en string
         String pattern = "dd-MM-yyyy";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
@@ -84,17 +85,16 @@ public class DatabaseManager extends SQLiteOpenHelper {
     //creation du cursor
     //on remplit la liste
     public ArrayList<MoodData> getLast7Mood() {
-
-        String[] columns = {"mood", "comment", "when_ ","id_"};
+        String[] columns = {"mood", "comment", "when_ ","_id"};
         String[] selectArgs = {};
         Cursor cursor = getReadableDatabase().query("T_Mood", columns, "", selectArgs, "", "", "");
         ArrayList<MoodData> moodDataArrayList = new ArrayList<>();
         while (cursor.moveToNext()) {
             MoodData moodData = new MoodData(cursor.getInt(cursor.getColumnIndex("mood")), cursor.getString(cursor.getColumnIndex("comment")), cursor.getString(cursor.getColumnIndex("when_")));
-            //MoodData moodData = new MoodData(cursor.getInt(0), cursor.getString(1), cursor.getString(2));
+            //MoodData moodData = new MoodData(cursor.getInt(0), cursor.getString(1), cursor.getString(2),cursor.getInt(3));
             String COMMENT = cursor.getString(cursor.getColumnIndex("comment"));
             String WHEN_ = cursor.getString(cursor.getColumnIndex("when_"));
-            IdMoodExist = cursor.getInt(cursor.getColumnIndex("id_"));
+            IdMoodExist = cursor.getInt(cursor.getColumnIndex("_id"));
             int MOOD = cursor.getInt(cursor.getColumnIndex("mood"));
             moodData.setMOOD(MOOD);
             moodData.setCOMMENT(COMMENT);
@@ -109,9 +109,8 @@ public class DatabaseManager extends SQLiteOpenHelper {
     }
 
     public boolean dateExistInDatabase() {
-        String dateExistInDatabase = "SELECT  when_, id_ FROM T_Mood ";
-
-        Cursor cursor = this.getReadableDatabase().rawQuery(dateExistInDatabase, null);
+        String dateExistInDatabase = "SELECT when_, _id FROM T_Mood ";
+        Cursor cursor = this.getReadableDatabase().rawQuery(dateExistInDatabase,null);
         cursor.moveToFirst();
         String dateInDataBase = null;
         String pattern = "dd-MM-yyyy";
@@ -120,10 +119,10 @@ public class DatabaseManager extends SQLiteOpenHelper {
         boolean dateExist = false;
 
         while (!cursor.isAfterLast()) {
-            dateInDataBase = cursor.getString(cursor.getColumnIndex("WHEN_"));
+            dateInDataBase = cursor.getString(cursor.getColumnIndex("when_"));
             if (dateInDataBase.equals(todayDate)) {
                 dateExist = true;
-                IdMoodExist = cursor.getInt(cursor.getColumnIndex("id_"));
+                IdMoodExist = cursor.getInt(cursor.getColumnIndex("_id"));
                 break;
             } else {
                 cursor.moveToNext();
@@ -133,19 +132,17 @@ public class DatabaseManager extends SQLiteOpenHelper {
         return dateExist;
     }
 
-
     public boolean updateRow(int moodValue, String userInputValue, String mCurrentDate) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("mood", moodValue);
         contentValues.put("comment", userInputValue);
         db.update("T_mood", contentValues, "when_ = '" + mCurrentDate + "'", null);
-        IdMoodExist = Integer.parseInt("SELECT * FROM T_MOOD WHERE _id");
+        IdMoodExist = Integer.parseInt("SELECT _id FROM T_");
         return true;
     }
 
     public Cursor getMoodComment() {
-
         Cursor c = this.getReadableDatabase().query("T_mood", new String[]{"_id", "mood", "comment"}, null, null, null, null, "_id" + " DESC", "7");
         if (c != null) {
             c.moveToFirst();
