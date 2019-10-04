@@ -109,7 +109,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
     }
 
     public boolean dateExistInDatabase() {
-        String dateExistInDatabase = "SELECT when_, _id FROM T_Mood ";
+        String dateExistInDatabase = "SELECT when_, _id FROM T_Mood";
         Cursor cursor = this.getReadableDatabase().rawQuery(dateExistInDatabase,null);
         cursor.moveToFirst();
         String dateInDataBase = null;
@@ -138,7 +138,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         contentValues.put("mood", moodValue);
         contentValues.put("comment", userInputValue);
         db.update("T_mood", contentValues, "when_ = '" + mCurrentDate + "'", null);
-        IdMoodExist = Integer.parseInt("SELECT _id FROM T_");
+        //IdMoodExist = Integer.parseInt("SELECT _id FROM T_Mood");
         return true;
     }
 
