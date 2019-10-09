@@ -85,13 +85,14 @@ public class DatabaseManager extends SQLiteOpenHelper {
     //creation du cursor
     //on remplit la liste
     public ArrayList<MoodData> getLast7Mood() {
+        //String strSql = "select * from T_mood order by _id desc limit 7";
         String[] columns = {"mood", "comment", "when_ ","_id"};
         String[] selectArgs = {};
+        //Cursor cursor = this.getReadableDatabase().rawQuery( strSql, null);
         Cursor cursor = getReadableDatabase().query("T_Mood", columns, "", selectArgs, "", "", "");
         ArrayList<MoodData> moodDataArrayList = new ArrayList<>();
         while (cursor.moveToNext()) {
             MoodData moodData = new MoodData(cursor.getInt(cursor.getColumnIndex("mood")), cursor.getString(cursor.getColumnIndex("comment")), cursor.getString(cursor.getColumnIndex("when_")));
-            //MoodData moodData = new MoodData(cursor.getInt(0), cursor.getString(1), cursor.getString(2),cursor.getInt(3));
             String COMMENT = cursor.getString(cursor.getColumnIndex("comment"));
             String WHEN_ = cursor.getString(cursor.getColumnIndex("when_"));
             IdMoodExist = cursor.getInt(cursor.getColumnIndex("_id"));
@@ -99,14 +100,19 @@ public class DatabaseManager extends SQLiteOpenHelper {
             moodData.setMOOD(MOOD);
             moodData.setCOMMENT(COMMENT);
             moodData.setWHEN_(WHEN_);
-
             moodDataArrayList.add(moodData);
             cursor.moveToNext();
         }
+        //cancel the list, whereClause null all the rows will be canceled
+        SQLiteDatabase db = this.getWritableDatabase();
+       if (moodDataArrayList.size() >7){
+           db.delete("T_Mood",null,null);
+            //moodDataArrayList.clear();
+        }
         cursor.close();
-
         return moodDataArrayList;
     }
+
 
     public boolean dateExistInDatabase() {
         String dateExistInDatabase = "SELECT when_, _id FROM T_Mood";
@@ -130,6 +136,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         }
         cursor.close();
         return dateExist;
+
     }
 
     public boolean updateRow(int moodValue, String userInputValue, String mCurrentDate) {
@@ -138,9 +145,18 @@ public class DatabaseManager extends SQLiteOpenHelper {
         contentValues.put("mood", moodValue);
         contentValues.put("comment", userInputValue);
         db.update("T_mood", contentValues, "when_ = '" + mCurrentDate + "'", null);
-        //IdMoodExist = Integer.parseInt("SELECT _id FROM T_Mood");
         return true;
+
+
     }
+
+
+    /*public boolean controlListSize() {
+        if(getLast7Mood().size() > 7) {
+            getLast7Mood().remove(0);
+        }
+        return true;
+    }*/
 
     public Cursor getMoodComment() {
         Cursor c = this.getReadableDatabase().query("T_mood", new String[]{"_id", "mood", "comment"}, null, null, null, null, "_id" + " DESC", "7");

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "381624784358",
+    "firebase_url": "https://moodtracker-75d46.firebaseio.com",
+    "project_id": "moodtracker-75d46",
+    "storage_bucket": "moodtracker-75d46.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:381624784358:android:ca6ff7d7327d28108ab227",
+        "android_client_info": {
+          "package_name": "sara.openclassrooms.moodtracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "381624784358-s56sf4bv7dpsqhf86bk13iib2flbabb1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_3JCgpKOBRRtnoqhMzen6m9Oq-gJy-xM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "381624784358-s56sf4bv7dpsqhf86bk13iib2flbabb1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
