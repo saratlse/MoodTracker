@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "381624784358-pkd4je4bhb58tjjpm8o1ind7fp47q2r0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "sara.openclassrooms.moodtracker",
+            "certificate_hash": "a5eec98f2012b4610c84e1d8e66319a7dcc8666c"
+          }
+        },
+        {
           "client_id": "381624784358-s56sf4bv7dpsqhf86bk13iib2flbabb1.apps.googleusercontent.com",
           "client_type": 3
         }

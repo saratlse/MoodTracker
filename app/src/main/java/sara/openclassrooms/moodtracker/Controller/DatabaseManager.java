@@ -60,14 +60,17 @@ public class DatabaseManager extends SQLiteOpenHelper {
     }
 
     public void insertMood(int moodValue, String userInputValue, String mCurrentDate) {
+
         //passer la date en string
         String pattern = "dd-MM-yyyy";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 
         mCurrentDate = simpleDateFormat.format(new Date());
-
-
         boolean result;
+
+
+            //String removeMood = "select * from T_mood order by when_ desc limit 1";
+
 
         //on update le mood si la date exist
         if (dateExistInDatabase()) {
@@ -80,6 +83,9 @@ public class DatabaseManager extends SQLiteOpenHelper {
             Log.i("DATABASE", "insertScore invoked");
         }
     }
+
+
+
 
 
     //creation du cursor
@@ -102,12 +108,6 @@ public class DatabaseManager extends SQLiteOpenHelper {
             moodData.setWHEN_(WHEN_);
             moodDataArrayList.add(moodData);
             cursor.moveToNext();
-        }
-        //cancel the list, whereClause null all the rows will be canceled
-        SQLiteDatabase db = this.getWritableDatabase();
-       if (moodDataArrayList.size() >7){
-           db.delete("T_Mood",null,null);
-            //moodDataArrayList.clear();
         }
         cursor.close();
         return moodDataArrayList;
@@ -147,16 +147,16 @@ public class DatabaseManager extends SQLiteOpenHelper {
         db.update("T_mood", contentValues, "when_ = '" + mCurrentDate + "'", null);
         return true;
 
-
     }
 
 
-    /*public boolean controlListSize() {
-        if(getLast7Mood().size() > 7) {
-            getLast7Mood().remove(0);
-        }
-        return true;
-    }*/
+
+
+    public int removeMood(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete("T_Mood", MOOD + " = " + id, null);
+    }
+
 
     public Cursor getMoodComment() {
         Cursor c = this.getReadableDatabase().query("T_mood", new String[]{"_id", "mood", "comment"}, null, null, null, null, "_id" + " DESC", "7");
