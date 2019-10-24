@@ -65,12 +65,9 @@ public class DatabaseManager extends SQLiteOpenHelper {
         String pattern = "dd-MM-yyyy";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 
+        //mCurrentDate is the date of the day
         mCurrentDate = simpleDateFormat.format(new Date());
-        boolean result;
-
-
-            //String removeMood = "select * from T_mood order by when_ desc limit 1";
-
+        //boolean result;
 
         //on update le mood si la date exist
         if (dateExistInDatabase()) {
@@ -82,20 +79,35 @@ public class DatabaseManager extends SQLiteOpenHelper {
             this.getWritableDatabase().execSQL(strSql);
             Log.i("DATABASE", "insertScore invoked");
         }
+
+        //cancel the last mood in the database
+        SQLiteDatabase db = this.getWritableDatabase();
+        String deleteLastMood = "select * from T_mood order by when_ desc limit 1";
+        Cursor cursor = this.getReadableDatabase().rawQuery( deleteLastMood, null);
+        while (moodValue>7){
+            db.delete("T_Mood", MOOD + " = " + "when_", null);
+            //if (mCurrentDate.)
+
+        }
     }
+    /*public void calculateDaysDiference (String dateToday, String lastDate) throws ParseException{
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = ("SELECT `da`,`END_DATE` FROM `room_booking");
+    }*/
 
-
-
+    public int removeMood(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete("T_Mood", MOOD + " = " + "when_", null);
+        //return db.delete("T_Mood","_id = ?",new String[id]);
+    }
 
 
     //creation du cursor
     //on remplit la liste
     public ArrayList<MoodData> getLast7Mood() {
-        //String strSql = "select * from T_mood order by _id desc limit 7";
         String[] columns = {"mood", "comment", "when_ ","_id"};
         String[] selectArgs = {};
-        //Cursor cursor = this.getReadableDatabase().rawQuery( strSql, null);
-        Cursor cursor = getReadableDatabase().query("T_Mood", columns, "", selectArgs, "", "", "");
+        Cursor cursor = getReadableDatabase().query("T_Mood", columns, "", selectArgs, "", "", " _id desc limit 7");
         ArrayList<MoodData> moodDataArrayList = new ArrayList<>();
         while (cursor.moveToNext()) {
             MoodData moodData = new MoodData(cursor.getInt(cursor.getColumnIndex("mood")), cursor.getString(cursor.getColumnIndex("comment")), cursor.getString(cursor.getColumnIndex("when_")));
@@ -108,14 +120,16 @@ public class DatabaseManager extends SQLiteOpenHelper {
             moodData.setWHEN_(WHEN_);
             moodDataArrayList.add(moodData);
             cursor.moveToNext();
+
         }
         cursor.close();
         return moodDataArrayList;
+
     }
 
 
     public boolean dateExistInDatabase() {
-        String dateExistInDatabase = "SELECT when_, _id FROM T_Mood";
+        String dateExistInDatabase = "SELECT when_, _id FROM T_Mood ";
         Cursor cursor = this.getReadableDatabase().rawQuery(dateExistInDatabase,null);
         cursor.moveToFirst();
         String dateInDataBase = null;
@@ -138,7 +152,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         return dateExist;
 
     }
-
+    // Update of the Row, we do change only the MoodValue and userInputValue WHERE when_ = mCurrent
     public boolean updateRow(int moodValue, String userInputValue, String mCurrentDate) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -150,14 +164,6 @@ public class DatabaseManager extends SQLiteOpenHelper {
     }
 
 
-
-
-    public int removeMood(int id) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete("T_Mood", MOOD + " = " + id, null);
-    }
-
-
     public Cursor getMoodComment() {
         Cursor c = this.getReadableDatabase().query("T_mood", new String[]{"_id", "mood", "comment"}, null, null, null, null, "_id" + " DESC", "7");
         if (c != null) {
@@ -165,6 +171,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         }
         return c;
     }
+
 }
 
 
