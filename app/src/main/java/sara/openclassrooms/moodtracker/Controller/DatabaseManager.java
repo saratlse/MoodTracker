@@ -80,25 +80,24 @@ public class DatabaseManager extends SQLiteOpenHelper {
             Log.i("DATABASE", "insertScore invoked");
         }
 
-        //cancel the last mood in the database
+        //cancel the older mood in the database
         SQLiteDatabase db = this.getWritableDatabase();
         String deleteLastMood = "select * from T_mood order by when_ desc limit 1";
         Cursor cursor = this.getReadableDatabase().rawQuery( deleteLastMood, null);
-        while (moodValue>7){
+        if (cursor.moveToLast()){
             db.delete("T_Mood", MOOD + " = " + "when_", null);
-            //if (mCurrentDate.)
-
+            db.close();
         }
     }
-    /*public void calculateDaysDiference (String dateToday, String lastDate) throws ParseException{
+    /*public void removeData(String date) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = ("SELECT `da`,`END_DATE` FROM `room_booking");
-    }*/
+        String whereClause = "DATE=?";
+        String[] whereArgs = new String[] {date};
+        db.delete("T_Mood",whereClause, whereArgs);*/
 
-    public int removeMood(int id) {
+    public void removeData(String date) {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete("T_Mood", MOOD + " = " + "when_", null);
-        //return db.delete("T_Mood","_id = ?",new String[id]);
+        db.delete("T_Mood", MOOD + " = " + date, null);
     }
 
 
@@ -121,10 +120,13 @@ public class DatabaseManager extends SQLiteOpenHelper {
             moodDataArrayList.add(moodData);
             cursor.moveToNext();
 
+            //delete the last mood
+            if (moodDataArrayList.size()>8) {
+                moodDataArrayList.remove(0);
+            }
         }
         cursor.close();
         return moodDataArrayList;
-
     }
 
 

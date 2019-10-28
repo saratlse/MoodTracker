@@ -96,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
+
         List<Fragment> list = new ArrayList<>();
         list.add(new MoodFragment1());
         list.add(new MoodFragment2());
