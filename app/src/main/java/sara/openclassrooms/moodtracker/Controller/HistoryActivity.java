@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -14,11 +13,8 @@ import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,31 +28,13 @@ import java.util.Date;
 import sara.openclassrooms.moodtracker.Model.Mood;
 import sara.openclassrooms.moodtracker.R;
 
-import static java.security.AccessController.getContext;
-
 public class HistoryActivity extends AppCompatActivity {
 
-
-    public static final String PREF_KEY_COMMENT = "PREF_KEY_COMMENT";
     final Context context = this;
-    ListView mHistoryListView;
-    TextView mHistoryTextView;
-
-
-    ArrayList<RelativeLayout> listLayout = new ArrayList<>();
-    ArrayList<Button> listButton = new ArrayList<>();
-    ArrayList<TextView> listTextView = new ArrayList<>();
     ArrayList<MoodData> historyList = new ArrayList<>();
-    ArrayList<ImageView> imageList = new ArrayList<>();
     String mCurrentDate = "dd-MM-yyyy";
-    SimpleDateFormat Sdf = new SimpleDateFormat();
-
-
-    private int width;
-    private int height;
     private SharedPreferences mSharedPref;
     private Calendar mCalendar;
-    private Date mDate;
     private String mComment;
     private SimpleDateFormat sdf;
     private Mood mYesterday;
@@ -68,9 +46,8 @@ public class HistoryActivity extends AppCompatActivity {
     private Mood mSevenDaysAgo;
     private int mActivityYesterdayColor, mActivity2DaysAgoColor, mActivity3DaysAgoColor, mActivity4DaysAgoColor, mActivity5DaysAgoColor, mActivity6DaysAgoColor, mActivity7DaysAgoColor;
     private String mActivityYesterdayComment, mActivity2DaysAgoComment, mActivity3DaysAgoComment, mActivity4DaysAgoComment, mActivity5DaysAgoComment, mActivity6DaysAgoComment, mActivity7DaysAgoComment;
-    private Object DifferentsMoods;
     private DatabaseManager databaseManager;
-    private String userInputValue;
+
 
     //removed one day at the date and set at 00:00
     public static Date removeOneDay(Date d) {
@@ -87,6 +64,7 @@ public class HistoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
 
+
         databaseManager = new DatabaseManager(this);
         historyList = databaseManager.getLast7Mood();
 
@@ -98,7 +76,6 @@ public class HistoryActivity extends AppCompatActivity {
         ArrayList<RelativeLayout> listLayout = new ArrayList<>();
         ArrayList<Button> listButton = new ArrayList<>();
         ArrayList<TextView> listTextView = new ArrayList<>();
-        ArrayList<ImageView> imageList = new ArrayList<>();
 
 
         RelativeLayout mJour1 = this.findViewById(R.id.activity_history_1_jour_layout);
@@ -290,7 +267,6 @@ public class HistoryActivity extends AppCompatActivity {
             mButton1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //Toast.makeText (getApplicationContext (), historyList.get (0).getCOMMENT()+":"+mYesterday.getMood (),Toast.LENGTH_SHORT).show ();
                     Toast.makeText(getApplicationContext(), historyList.get(0).getCOMMENT(), Toast.LENGTH_SHORT).show();
                 }
             });
@@ -299,7 +275,6 @@ public class HistoryActivity extends AppCompatActivity {
         /////MOOD 2/////
         if (mood2 == null) {
             mButton2.setVisibility(View.INVISIBLE);
-            //Toast.makeText(this, "Vous n'avez pas d'historique :(", Toast.LENGTH_SHORT).show();
         } else {
             if (mood2.getCOMMENT().isEmpty()) {
                 mButton2.setVisibility(View.INVISIBLE);
@@ -319,7 +294,6 @@ public class HistoryActivity extends AppCompatActivity {
         //////MOOD 3///////|
         if (mood3 == null) {
             mButton3.setVisibility(View.INVISIBLE);
-            //Toast.makeText (this, "Vous n'avez pas  d'historique :(",Toast.LENGTH_SHORT).show ();
         } else {
             if (mood3.getCOMMENT().isEmpty()) {
                 mButton6.setVisibility(View.INVISIBLE);
@@ -338,7 +312,6 @@ public class HistoryActivity extends AppCompatActivity {
         //////MOOD 4//////////
         if (mood4 == null) {
             mButton4.setVisibility(View.INVISIBLE);
-            //Toast.makeText (this, "Vous n'avez pas d'historique :(",Toast.LENGTH_SHORT).show ();
         } else {
             if (mood4.getCOMMENT().isEmpty()) {
                 mButton4.setVisibility(View.INVISIBLE);
@@ -358,7 +331,6 @@ public class HistoryActivity extends AppCompatActivity {
         ///MOOD 5//////////////////
         if (mood5 == null) {
             mButton5.setVisibility(View.INVISIBLE);
-            //Toast.makeText (this, "Vous n'avez pas d'historique :(", Toast.LENGTH_SHORT).show ();
         } else {
             if (mood5.getCOMMENT().isEmpty()) {
                 mButton6.setVisibility(View.INVISIBLE);
@@ -378,7 +350,6 @@ public class HistoryActivity extends AppCompatActivity {
         /////MOOD 6 ///////////////////
         if (mood6 == null) {
             mButton6.setVisibility(View.INVISIBLE);
-            //Toast.makeText (this, "Vous n'avez pas d'historique :(", Toast.LENGTH_SHORT).show ();
         } else {
             if (mood6.getCOMMENT().isEmpty()) {
                 mButton6.setVisibility(View.INVISIBLE);
@@ -397,7 +368,6 @@ public class HistoryActivity extends AppCompatActivity {
         //////MOOD 7////////////////
         if (mood7 == null) {
             mButton7.setVisibility(View.INVISIBLE);
-            //Toast.makeText (this, "Vous n'avez pas  d'historique :(", Toast.LENGTH_SHORT).show ();
         } else {
             if (mood7.getCOMMENT().isEmpty()) {
                 mButton7.setVisibility(View.INVISIBLE);
@@ -438,7 +408,6 @@ public class HistoryActivity extends AppCompatActivity {
     public ArrayList<String> sevenLastComment() {
         String comment;
         ArrayList<String> list = new ArrayList<>();
-
         Date d = new Date();
         String s;
         while (list.size() < 8) {
@@ -465,7 +434,6 @@ public class HistoryActivity extends AppCompatActivity {
 
         if (databaseManager.getLast7Mood()== null) {
             relativeLayout.setBackgroundColor(0);
-            //relativeLayout.setVisibility(View.INVISIBLE);
 
         } else {
             switch (position) {

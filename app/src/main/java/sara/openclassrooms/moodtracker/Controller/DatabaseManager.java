@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,8 +23,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
     public static final String COMMENT = "comment";
     public static final String MOOD = "mood";
-    private int IdMoodExist ;
-
+    private int IdMoodExist;
 
 
     //constructeur context en parametre c'est la classe de base
@@ -59,6 +59,11 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
     }
 
+    private static long daysBetween(Date one, Date two) {
+        long difference = (one.getTime() - two.getTime()) / 86400000;
+        return Math.abs(difference);
+    }
+
     public void insertMood(int moodValue, String userInputValue, String mCurrentDate) {
 
         //passer la date en string
@@ -67,7 +72,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
         //mCurrentDate is the date of the day
         mCurrentDate = simpleDateFormat.format(new Date());
-        //boolean result;
+
 
         //on update le mood si la date exist
         if (dateExistInDatabase()) {
@@ -79,32 +84,27 @@ public class DatabaseManager extends SQLiteOpenHelper {
             this.getWritableDatabase().execSQL(strSql);
             Log.i("DATABASE", "insertScore invoked");
         }
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+            SQLiteDatabase db = this.getWritableDatabase();
+            String todayDate = "SELECT when_, _id FROM T_Mood ";
+            Date today = new Date();
+            Date dateFromDatabase = simpleDateFormat.parse(todayDate);
 
-        //cancel the older mood in the database
-        SQLiteDatabase db = this.getWritableDatabase();
-        String deleteLastMood = "select * from T_mood order by when_ desc limit 1";
-        Cursor cursor = this.getReadableDatabase().rawQuery( deleteLastMood, null);
-        if (cursor.moveToLast()){
-            db.delete("T_Mood", MOOD + " = " + "when_", null);
-            db.close();
+            //if (dateFromDatabase.getDate() - today.getDay()>7){
+            if (daysBetween(dateFromDatabase, today) > 7) {
+                //removeData();
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
-    }
-    /*public void removeData(String date) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        String whereClause = "DATE=?";
-        String[] whereArgs = new String[] {date};
-        db.delete("T_Mood",whereClause, whereArgs);*/
 
-    public void removeData(String date) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete("T_Mood", MOOD + " = " + date, null);
     }
-
 
     //creation du cursor
     //on remplit la liste
     public ArrayList<MoodData> getLast7Mood() {
-        String[] columns = {"mood", "comment", "when_ ","_id"};
+        String[] columns = {"mood", "comment", "when_ ", "_id"};
         String[] selectArgs = {};
         Cursor cursor = getReadableDatabase().query("T_Mood", columns, "", selectArgs, "", "", " _id desc limit 7");
         ArrayList<MoodData> moodDataArrayList = new ArrayList<>();
@@ -119,20 +119,33 @@ public class DatabaseManager extends SQLiteOpenHelper {
             moodData.setWHEN_(WHEN_);
             moodDataArrayList.add(moodData);
             cursor.moveToNext();
-
-            //delete the last mood
-            if (moodDataArrayList.size()>8) {
-                moodDataArrayList.remove(0);
-            }
         }
         cursor.close();
         return moodDataArrayList;
     }
 
+    // Update of the Row, we do change only the MoodValue and userInputValue WHERE when_ = mCurrent
+    public boolean updateRow(int moodValue, String userInputValue, String mCurrentDate) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("mood", moodValue);
+        contentValues.put("comment", userInputValue);
+        db.update("T_mood", contentValues, "when_ = '" + mCurrentDate + "'", null);
+        return true;
+    }
+
+
+    public Cursor getMoodComment() {
+        Cursor c = this.getReadableDatabase().query("T_mood", new String[]{"_id", "mood", "comment"}, null, null, null, null, "_id" + " DESC", "7");
+        if (c != null) {
+            c.moveToFirst();
+        }
+        return c;
+    }
 
     public boolean dateExistInDatabase() {
         String dateExistInDatabase = "SELECT when_, _id FROM T_Mood ";
-        Cursor cursor = this.getReadableDatabase().rawQuery(dateExistInDatabase,null);
+        Cursor cursor = this.getReadableDatabase().rawQuery(dateExistInDatabase, null);
         cursor.moveToFirst();
         String dateInDataBase = null;
         String pattern = "dd-MM-yyyy";
@@ -153,27 +166,45 @@ public class DatabaseManager extends SQLiteOpenHelper {
         cursor.close();
         return dateExist;
 
+
     }
-    // Update of the Row, we do change only the MoodValue and userInputValue WHERE when_ = mCurrent
-    public boolean updateRow(int moodValue, String userInputValue, String mCurrentDate) {
+
+    public Cursor getData() {
         SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("mood", moodValue);
-        contentValues.put("comment", userInputValue);
-        db.update("T_mood", contentValues, "when_ = '" + mCurrentDate + "'", null);
-        return true;
+        return db.rawQuery("SELECT * FROM " + "T_Mood" + " ORDER BY ID DESC LIMIT 8", null);
+    }
 
+    Cursor getLastData() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.rawQuery("SELECT * FROM " + "T_Mood" + " ORDER BY ID DESC LIMIT 1", null);
     }
 
 
-    public Cursor getMoodComment() {
-        Cursor c = this.getReadableDatabase().query("T_mood", new String[]{"_id", "mood", "comment"}, null, null, null, null, "_id" + " DESC", "7");
-        if (c != null) {
-            c.moveToFirst();
+    /*public void compareDateByCalendar(DateFormat sdf, Date oldDate, Date newDate) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        //String today = "SELECT when_, _id FROM T_Mood ";
+        Date today = new Date();
+
+        if (sdf.getCalendar() - today.getTime()) {
+
+            try {
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                Date today = sdf.parse("");
+                Date lastDay = sdf.parse("");
+
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+
         }
-        return c;
-    }
+    }*/
 
+    void removeData(String date) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String whereClause = "DATE=?";
+        String[] whereArgs = new String[]{date};
+        db.delete("T_Mood", whereClause, whereArgs);
+    }
 }
 
 

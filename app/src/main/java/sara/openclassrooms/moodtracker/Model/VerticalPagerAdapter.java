@@ -18,8 +18,6 @@ public class VerticalPagerAdapter extends FragmentStatePagerAdapter implements L
     }
 
 
-
-
     @Override
     public Fragment getItem(int position) {
         return fragmentList.get(position);
