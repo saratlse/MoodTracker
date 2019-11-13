@@ -3,13 +3,13 @@
     <string name="title_activity_history">HistoryActivity</string>
 
     //Strings used dans HistoryActivity pour recuperer les moods
-    <string name="jour_7">il y a une semaine</string>
-    <string name="jour_6">il y a 6 jours</string>
-    <string name="jour_5">il y a 5 jours</string>
-    <string name="jour_4">il y a 4 jours</string>
-    <string name="jour_3">il y a 3 jours</string>
-    <string name="jour_2">il y a 2 jours</string>
-    <string name="jour_1">Hier</string>
+    <string name="jour_7">il y a 6 jours</string>
+    <string name="jour_6">il y a 5 jours</string>
+    <string name="jour_5">il y a 4 jours</string>
+    <string name="jour_4">il y a 3 jours</string>
+    <string name="jour_3">il y a 2 jours</string>
+    <string name="jour_2">Hier</string>
+    <string name="jour_1">Aujourd\'hui</string>
 
 
     //Strings pour partager les moods
@@ -25,11 +25,6 @@
     <string name="cancelComment">ANNULER</string>
     <string name="validateComment">VALIDER</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="notification_channel_id">myCanal</string>
-    <string name="notification_channel_title">myTitle</string>
-    <string name="notification_channel_desc">myChannel</string>
 
 
 </resources>

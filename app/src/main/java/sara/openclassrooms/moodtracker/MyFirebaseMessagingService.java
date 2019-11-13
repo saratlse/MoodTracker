@@ -1,8 +1,6 @@
 package sara.openclassrooms.moodtracker;
 
-import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -35,17 +33,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         //envoyer la notif
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-        {
-            String channelId = getString(R.string.notification_channel_id);
-            String channnelTitle = getString(R.string.notification_channel_title);
-            String channelDescription = getString(R.string.notification_channel_desc);
-            NotificationChannel channel = new NotificationChannel(channelId,channnelTitle,NotificationManager.IMPORTANCE_DEFAULT);
-            channel.setDescription(channelDescription);
-            notificationManager.createNotificationChannel(channel);
-            notificationBuilder.setChannelId(channelId);
-        }
         notificationManager.notify(1, notificationBuilder.build());
     }
 }

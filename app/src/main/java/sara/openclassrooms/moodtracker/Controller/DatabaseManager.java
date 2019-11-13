@@ -68,7 +68,6 @@ public class DatabaseManager extends SQLiteOpenHelper {
         //mCurrentDate is the date of the day
         mCurrentDate = simpleDateFormat.format(new Date());
 
-
         //on update le mood si la date exist
         if (dateExistInDatabase()) {
             updateRow(moodValue, userInputValue, mCurrentDate);
@@ -80,9 +79,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
             Log.i("DATABASE", "insertScore invoked");
         }
 
-
     }
-
 
     // Update of the Row, we do change only the MoodValue and userInputValue WHERE when_ = mCurrent
     public boolean updateRow(int moodValue, String userInputValue, String mCurrentDate) {
@@ -154,12 +151,10 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
                 Calendar databaseCalendar = Calendar.getInstance();
                 databaseCalendar.setTime(dateFromDatabase);
-                String[] whereArgs = new String[]{dateInDatabase};
 
                 //we compare if the date of today less the date of the db are greater than 7  we delete
                 if (calendar.get(Calendar.DAY_OF_MONTH) - databaseCalendar.get(Calendar.DAY_OF_MONTH) > 7) {
-                    //db.delete("T_Mood","_id == " + cursor.getInt(cursor.getColumnIndex("when_")));
-                    db.delete("T_Moods", "_id", whereArgs);
+                    db.delete("T_Mood", "_id = " + IdMoodExist + "", null);
                 }
 
             } catch (ParseException e) {

@@ -8,27 +8,27 @@ public class MoodData {
 
 
     //CONSTRUCTOR
-    public MoodData(int MOOD, String COMMENT, String WHEN_){
-        this.MOOD =MOOD;
+    public MoodData(int MOOD, String COMMENT, String WHEN_) {
+        this.MOOD = MOOD;
         this.COMMENT = COMMENT;
         this.WHEN_ = WHEN_;
 
     }
 
-
-    public void setMOOD(int mood){
-    this.MOOD = mood;
-    }
     public int getMOOD() {
         return MOOD;
     }
 
-    public void setCOMMENT(String comment) {
-        this.COMMENT = comment;
+    public void setMOOD(int mood) {
+        this.MOOD = mood;
     }
 
     public String getCOMMENT() {
         return COMMENT;
+    }
+
+    public void setCOMMENT(String comment) {
+        this.COMMENT = comment;
     }
 
     public void setWHEN_(String when_) {
