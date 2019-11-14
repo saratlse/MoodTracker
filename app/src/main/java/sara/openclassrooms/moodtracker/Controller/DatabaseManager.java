@@ -29,7 +29,6 @@ public class DatabaseManager extends SQLiteOpenHelper {
         super(context, DATA_BASE_NAME, null, DATABASE_VERSION);//4 parametres
     }
 
-
     //premiere fois que l'on ouvre la base de donnee on l'a cree ici
     //parametre SQLiteDatabase db objet  de donnee
     @Override
@@ -43,7 +42,6 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
         db.execSQL(strSql);//j'excute ma ligne de code
         Log.i("DATABASE", "onCreate invoked");//on verifie que la methode soit utiliser 1 fois
-
     }
 
     //methode qui met a jour ma base de donnee changement de version
@@ -54,9 +52,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         db.execSQL(strSQL);
         this.onCreate(db);
         Log.i("DATABASE", "onUpgrade invoked");
-
     }
-
 
 
     public void insertMood(int moodValue, String userInputValue, String mCurrentDate) {

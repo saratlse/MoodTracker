@@ -14,10 +14,9 @@ public class MoodFragment5 extends Fragment {
     @Nullable
 
 
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
-                             Bundle savedInstanceState){
+                             Bundle savedInstanceState) {
 
         ViewGroup rootView = (ViewGroup) inflater.
                 inflate(R.layout.mood5_super, container, false);
