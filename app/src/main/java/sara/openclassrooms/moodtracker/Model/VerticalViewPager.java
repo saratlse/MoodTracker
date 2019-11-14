@@ -51,14 +51,7 @@ public class VerticalViewPager extends ViewPager {
     }
 
 
-
-    //PageTransformer cette methode permet d'afficher une animation differente
-    //elle est appeler a chaque fois pour rendre la page visible
-    //on la fournie au ViewPager
     private class VerticalPage implements ViewPager.PageTransformer{
-
-        //le parametre position indique l'emplacement de la page par rapoort a l'ecran
-        //valeur 0 quand la page est au centre de l'ecran
 
         @Override
         public void transformPage(@NonNull View view, float position) {

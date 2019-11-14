@@ -24,13 +24,10 @@ public class DatabaseManager extends SQLiteOpenHelper {
     private int IdMoodExist;
 
 
-    //constructeur context en parametre c'est la classe de base
     public DatabaseManager(Context context) {
         super(context, DATA_BASE_NAME, null, DATABASE_VERSION);//4 parametres
     }
 
-    //premiere fois que l'on ouvre la base de donnee on l'a cree ici
-    //parametre SQLiteDatabase db objet  de donnee
     @Override
     public void onCreate(SQLiteDatabase db) {
         String strSql = "create table T_Mood ("
@@ -44,8 +41,6 @@ public class DatabaseManager extends SQLiteOpenHelper {
         Log.i("DATABASE", "onCreate invoked");//on verifie que la methode soit utiliser 1 fois
     }
 
-    //methode qui met a jour ma base de donnee changement de version
-    //on met a jour ici la nouvelle base de donnee
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         String strSQL = "drop table T_Mood";
@@ -57,20 +52,17 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
     public void insertMood(int moodValue, String userInputValue, String mCurrentDate) {
 
-        //passer la date en string
         String pattern = "dd-MM-yyyy";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 
-        //mCurrentDate is the date of the day
         mCurrentDate = simpleDateFormat.format(new Date());
 
-        //on update le mood si la date exist
+
         if (dateExistInDatabase()) {
             updateRow(moodValue, userInputValue, mCurrentDate);
         } else {
             String strSql = "insert into T_Mood (mood,comment,when_) values (" + moodValue + ",'" + userInputValue + "','" + simpleDateFormat.format(new Date()) + "')";
 
-            //j'envoie mon ordre sql a la base this=dataBaseManager
             this.getWritableDatabase().execSQL(strSql);
             Log.i("DATABASE", "insertScore invoked");
         }
@@ -112,8 +104,6 @@ public class DatabaseManager extends SQLiteOpenHelper {
     }
 
 
-    //creation du cursor
-    //on remplit la liste
     public ArrayList<MoodData> getLast7Mood() {
         String[] columns = {"mood", "comment", "when_ ", "_id"};
         String[] selectArgs = {};

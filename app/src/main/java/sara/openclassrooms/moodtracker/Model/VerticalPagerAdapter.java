@@ -12,7 +12,7 @@ import java.util.List;
 public class VerticalPagerAdapter extends FragmentStatePagerAdapter implements ListAdapter {
     private List<Fragment> fragmentList;
 
-    public VerticalPagerAdapter(FragmentManager fm, List<Fragment> fragmentList){
+    public VerticalPagerAdapter(FragmentManager fm, List<Fragment> fragmentList) {
         super(fm);
         this.fragmentList = fragmentList;
     }
@@ -54,7 +54,6 @@ public class VerticalPagerAdapter extends FragmentStatePagerAdapter implements L
     }
 
 
-    //la methode getCount renvoie le nombre de pages que l'adaptateur creera
     @Override
     public int getCount() {
         return fragmentList.size();

@@ -1,7 +1,6 @@
 package sara.openclassrooms.moodtracker.Controller;
 
 import android.annotation.TargetApi;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -25,29 +24,9 @@ public class HistoryActivity extends AppCompatActivity {
 
     ArrayList<MoodData> historyList = new ArrayList<>();
     String mCurrentDate = "dd-MM-yyyy";
-    private SharedPreferences mSharedPref;
     private Calendar mCalendar;
-    //private String mComment;
-    //private SimpleDateFormat sdf;
-    // private Mood mYesterday;
-    // private Mood mTwoDaysAgo;
-    //private Mood mThreeDaysAgo;
-    //private Mood mFourDaysAgo;
-    //private Mood mFiveDaysAgo;
-    //private Mood mSixDaysAgo;
-    //private Mood mSevenDaysAgo;
-    //private int mActivityYesterdayColor, mActivity2DaysAgoColor, mActivity3DaysAgoColor, mActivity4DaysAgoColor, mActivity5DaysAgoColor, mActivity6DaysAgoColor, mActivity7DaysAgoColor;
-    private String mActivityYesterdayComment, mActivity2DaysAgoComment, mActivity3DaysAgoComment, mActivity4DaysAgoComment, mActivity5DaysAgoComment, mActivity6DaysAgoComment, mActivity7DaysAgoComment;
     private DatabaseManager databaseManager;
 
-
-    //removed one day at the date and set at 00:00
-    /*public static Date removeOneDay(Date d) {
-        Calendar dateStart = Calendar.getInstance();
-        dateStart.setTime(d);
-        dateStart.add(Calendar.DAY_OF_YEAR, -1);
-        return dateStart.getTime();
-    }*/
 
     @TargetApi(Build.VERSION_CODES.M)
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -102,7 +81,7 @@ public class HistoryActivity extends AppCompatActivity {
         listLayout.add(mJour7);
         listButton.add(mButton7);
         listTextView.add(mTextView7);
-        mCalendar.add(Calendar.DATE, -1); //modifie un element de la date
+        mCalendar.add(Calendar.DATE, -1);
 
         //DAY 6
         listLayout.add(mJour6);
@@ -191,7 +170,7 @@ public class HistoryActivity extends AppCompatActivity {
             mood7 = historyList.get(6);
         }
 
-        ////MOOD1
+        ///////////////// MOOD1 /////////////////
         if (mood1 == null) {
             mButton1.setVisibility(View.INVISIBLE);
         } else {
@@ -209,7 +188,7 @@ public class HistoryActivity extends AppCompatActivity {
             });
         }
 
-        /////MOOD 2/////
+        ///////////////// MOOD 2 /////////////////
         if (mood2 == null) {
             mButton2.setVisibility(View.INVISIBLE);
         } else {
@@ -228,7 +207,7 @@ public class HistoryActivity extends AppCompatActivity {
             });
         }
 
-        //////MOOD 3///////|
+        ///////////////// MOOD 3 /////////////////
         if (mood3 == null) {
             mButton3.setVisibility(View.INVISIBLE);
         } else {
@@ -246,7 +225,7 @@ public class HistoryActivity extends AppCompatActivity {
             });
         }
 
-        //////MOOD 4//////////
+        ///////////////// MOOD 4 //////////////////
         if (mood4 == null) {
             mButton4.setVisibility(View.INVISIBLE);
         } else {
@@ -265,7 +244,7 @@ public class HistoryActivity extends AppCompatActivity {
         }
 
 
-        ///MOOD 5//////////////////
+        ///////////////// MOOD 5 /////////////////
         if (mood5 == null) {
             mButton5.setVisibility(View.INVISIBLE);
         } else {
@@ -283,8 +262,7 @@ public class HistoryActivity extends AppCompatActivity {
             });
         }
 
-
-        /////MOOD 6 ///////////////////
+        ///////////////// MOOD 6 /////////////////
         if (mood6 == null) {
             mButton6.setVisibility(View.INVISIBLE);
         } else {
@@ -302,7 +280,7 @@ public class HistoryActivity extends AppCompatActivity {
             });
         }
 
-        //////MOOD 7////////////////
+        ///////////////// MOOD 7 /////////////////
         if (mood7 == null) {
             mButton7.setVisibility(View.INVISIBLE);
         } else {
@@ -332,7 +310,7 @@ public class HistoryActivity extends AppCompatActivity {
         int height = displayMetrics.heightPixels;
         int width = displayMetrics.widthPixels;
 
-        if (databaseManager.getLast7Mood()== null) {
+        if (databaseManager.getLast7Mood() == null) {
             relativeLayout.setBackgroundColor(0);
 
         } else {
