@@ -44,12 +44,15 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String CURRENT_DAY = "CURRENT_DAY";
     public static final String PREF_KEY_COMMENT = "PREF_KEY_COMMENT";
+
     public static final String PREFERENCES_KEY_MOOD = "mood";
+
     private static final String SHARED_PREFS = "SHARED_PREFS";
     private static final String PREVIOUS_RECORDED_DAY = "PREVIOUS_RECORDED_DAY";
     private static final String PREF_BACKGROUND_COLOR = "PREF_BACKGROUND_COLOR";
     private static final String SAVED_SMILEY_STATE = "SAVED_SMILEY_STATE";//key used to read and save Smiley state
     private static final String CURRENT_MOOD_COMMENT = "CURRENT_MOOD_COMMENT";
+
     final Context context = this;
     public EditText edResult;
     public static String userInputValue;
@@ -101,17 +104,15 @@ public class MainActivity extends AppCompatActivity {
         list.add(new MoodFragment4());
         list.add(new MoodFragment5());
 
-
         mSharedPref = getPreferences(MODE_PRIVATE);
         mComment = mSharedPref.getString(PREF_KEY_COMMENT, "");
-
-
         mBtnHistoric = findViewById(R.id.historyButton);
         mBtnComment = findViewById(R.id.commentButton);
         edResult = findViewById(R.id.editTextComment);
 
 
-        mood = Storage.load(context, "MOOD" + dateToString(new Date()));
+        //mood = Storage.load(context, "MOOD" + dateToString(new Date()));
+        mood = Storage.load(context, "mood");
 
         //je recupere le context de mon activity
         databaseManager = new DatabaseManager (getBaseContext ());

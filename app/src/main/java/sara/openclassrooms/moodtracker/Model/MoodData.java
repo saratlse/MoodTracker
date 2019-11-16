@@ -38,6 +38,6 @@ public class MoodData {
     @Override
     public String toString() {
         return mood + " : " + comment + " : " + when;
-        
+
     }
 }
