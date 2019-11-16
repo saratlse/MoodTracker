@@ -204,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
-        databaseManager = new DatabaseManager (this);
+//        databaseManager = new DatabaseManager (this);
 
 
         //DATE
@@ -216,11 +216,11 @@ public class MainActivity extends AppCompatActivity {
         mCurrentDate = sdf.format(mCalendar.getTime());
 
 
-        mood = Storage.load(this, mCurrentDate);
-
-        //Enregistrer un commentaire
-        mSharedPref = getSharedPreferences("COMMENT" + dateToString(new Date()), MODE_PRIVATE);//affichage COMMENT26062019
-        mSharedPref.edit().putString(PREF_KEY_COMMENT, mComment).apply();
+//        mood = Storage.load(this, mCurrentDate);
+//
+//        //Enregistrer un commentaire
+//        mSharedPref = getSharedPreferences("COMMENT" + dateToString(new Date()), MODE_PRIVATE);//affichage COMMENT26062019
+//        mSharedPref.edit().putString(PREF_KEY_COMMENT, mComment).apply();
 
 
         //////////////////////////////
@@ -230,7 +230,7 @@ public class MainActivity extends AppCompatActivity {
         pagerAdapter = new VerticalPagerAdapter(getSupportFragmentManager(), list);
         viewPager.setAdapter(pagerAdapter);
         //final Intent sendIntent = new Intent(Intent.ACTION_SEND);
-//        viewPager.setCurrentItem(mSharedPref.getInt(PREFERENCES_KEY_MOOD, 0)); retirer le 26 juin
+        viewPager.setCurrentItem(mood.getPosition());
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
 
@@ -263,7 +263,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                         //ENREGISTRER LE MOOD DANS LES SHAREDPREFERENCES
-                        Storage.store(context, mood, moodKey);
+                        Storage.store(context, mood, "mood");
 
 
                         //ENREGISTRER LA COULEUR
@@ -296,7 +296,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                         //ENREGISTRER LE MOOD DANS LES SHAREDPREFERENCES
-                        Storage.store(context, mood, moodKey);
+                        Storage.store(context, mood, "mood");
 
 
                         //SAVE THE COLOR
@@ -326,7 +326,7 @@ public class MainActivity extends AppCompatActivity {
                         mood.setMood("NORMAL_STATE");//mettre l'etat du mood
 
                         //ENREGISTRER LE MOOD DANS LES SHAREDPREFERENCES
-                        Storage.store(context, mood, moodKey);
+                        Storage.store(context, mood, "mood");
 
 
                         //SAVE THE COLOR
@@ -357,7 +357,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                         //ENREGISTRER LE MOOD DANS LES SHAREDPREFERENCES
-                        Storage.store(context, mood, moodKey);
+                        Storage.store(context, mood, "mood");
 
                         //SAVE THE COLOR
                         mSharedPref.edit().putString(PREFERENCES_KEY_MOOD, "HAPPY_STATE ").apply();
@@ -387,7 +387,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                         //ENREGISTRER LE MOOD DANS LES SHAREDPREFERENCES
-                        Storage.store(context, mood, moodKey);
+                        Storage.store(context, mood, "mood");
 
                         //SAVE THE COMMENT
                         mSharedPref.edit().putString(SAVED_SMILEY_STATE, "SUPER_HAPPY_STATE").apply();
