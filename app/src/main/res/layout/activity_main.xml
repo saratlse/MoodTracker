@@ -7,7 +7,7 @@
     tools:context=".Controller.MainActivity">
 
 
-    <sara.openclassrooms.moodtracker.Model.VerticalViewPager
+    <sara.openclassrooms.moodtracker.View.VerticalViewPager
         android:id="@+id/viewPager"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

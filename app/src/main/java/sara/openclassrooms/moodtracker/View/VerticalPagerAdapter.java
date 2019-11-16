@@ -1,4 +1,4 @@
-package sara.openclassrooms.moodtracker.Model;
+package sara.openclassrooms.moodtracker.View;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

@@ -1,4 +1,4 @@
-package sara.openclassrooms.moodtracker.Fragment;
+package sara.openclassrooms.moodtracker.Controller.Fragment;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,17 +10,16 @@ import android.view.ViewGroup;
 
 import sara.openclassrooms.moodtracker.R;
 
-public class MoodFragment2 extends Fragment {
+public class MoodFragment5 extends Fragment {
     @Nullable
-
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
-                             Bundle savedInstanceState){
+                             Bundle savedInstanceState) {
 
         ViewGroup rootView = (ViewGroup) inflater.
-                inflate(R.layout.mood2_disappointed, container, false);
+                inflate(R.layout.mood5_super, container, false);
 
         return rootView;
 

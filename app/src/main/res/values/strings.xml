@@ -3,13 +3,13 @@
     <string name="title_activity_history">HistoryActivity</string>
 
     //Strings used dans HistoryActivity pour recuperer les moods
-    <string name="jour_7">il y a 7 jours</string>
-    <string name="jour_6">il y a 6 jours</string>
-    <string name="jour_5">il y a 5 jours</string>
-    <string name="jour_4">il y a 4 jours</string>
-    <string name="jour_3">il y a 3 jours</string>
-    <string name="jour_2">Hier</string>
-    <string name="jour_1">Aujourd\'hui</string>
+    <string name="jour_7">il y a une semaine</string>
+    <string name="jour_6">il y a six jours</string>
+    <string name="jour_5">il y a cinq jours</string>
+    <string name="jour_4">il y a quatre jours</string>
+    <string name="jour_3">il y a trois jours</string>
+    <string name="jour_2">Avant-Hier</string>
+    <string name="jour_1">Hier</string>
 
 
     //Strings pour partager les moods

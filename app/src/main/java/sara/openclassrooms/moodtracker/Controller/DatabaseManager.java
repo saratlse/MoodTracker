@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import sara.openclassrooms.moodtracker.Model.MoodData;
+
 
 public class DatabaseManager extends SQLiteOpenHelper {
 
@@ -116,9 +118,9 @@ public class DatabaseManager extends SQLiteOpenHelper {
             String WHEN_ = cursor.getString(cursor.getColumnIndex("when_"));
             IdMoodExist = cursor.getInt(cursor.getColumnIndex("_id"));
             int MOOD = cursor.getInt(cursor.getColumnIndex("mood"));
-            moodData.setMOOD(MOOD);
-            moodData.setCOMMENT(COMMENT);
-            moodData.setWHEN_(WHEN_);
+            moodData.setMood(MOOD);
+            moodData.setComment(COMMENT);
+            moodData.setWhen(WHEN_);
             moodDataArrayList.add(moodData);
             dateInDatabase = cursor.getString(cursor.getColumnIndex("when_"));
             cursor.moveToNext();

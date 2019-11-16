@@ -1,4 +1,4 @@
-package sara.openclassrooms.moodtracker.Model;
+package sara.openclassrooms.moodtracker.View;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

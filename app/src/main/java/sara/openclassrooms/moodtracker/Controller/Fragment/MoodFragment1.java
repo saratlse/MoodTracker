@@ -1,4 +1,4 @@
-package sara.openclassrooms.moodtracker.Fragment;
+package sara.openclassrooms.moodtracker.Controller.Fragment;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
